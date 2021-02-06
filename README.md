@@ -28,3 +28,19 @@ The following diagram shows the system architecture:
 The following diagram shows the data model:
 
 ![Alt text](diagrams/cw-data-model.png?raw=true "Title") 
+
+## Run the app
+
+1. Start containers using docker compose:
+
+```
+docker-compose up
+```
+
+2. Run the application
+
+```
+mvn spring-boot:run
+```
+
+It runs the application on http://localhost:8080
