@@ -17,9 +17,11 @@ It provides the following functionalities:
 * Kafka
 * Docker
 
+Note: a [docker-compose.yml](docker-compose.yml) is provided. It contains initial dummy data for playing around with the app.
+
 ## Architecture
 
-The following diagram shows the system architecture:
+The following diagram shows the systems architecture:
 
 ![Alt text](diagrams/cw-architecture.png?raw=true "Architecture") 
 
