@@ -16,11 +16,9 @@ public class UserRepository {
     }
 
     public Optional<User> find(Integer id) {
-        User user = jdbcTemplate.query(
+        return jdbcTemplate.query(
                 "SELECT ID, USERNAME, PASSWORD, EMAIL FROM USERS WHERE ID = ?",
                 (rs, rowNum) -> new User(Optional.of(rs.getInt("ID")), rs.getString("USERNAME"), rs.getString("PASSWORD"), rs.getString("EMAIL")),
-                    id).get(0);
-
-        return Optional.ofNullable(user);
+                    id).stream().findFirst();
     }
 }
