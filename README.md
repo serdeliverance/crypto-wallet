@@ -41,3 +41,11 @@ curl -X PUT -H "Content-Type: application/json" \
 ```
 curl -X "DELETE" http://localhost:8080/users/:userId
 ```
+
+## Extra notes
+
+## Extra notes
+
+* A ready [docker-compose](docker-compose.yml) is provided. It contains all the components ready for local development. It also contains dummy data for playing around with the app.
+
+* Also, a [postman collection](postman-collection/crypto.postman_collection.json) is provided.
