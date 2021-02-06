@@ -60,4 +60,11 @@ public class UserController {
         LOGGER.info("updating user: {}", id);
         userService.update(convertToModel(id, updateUser));
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable("id") Integer id) {
+        LOGGER.info("deleting user with userId: {}", id);
+        userService.delete(id);
+    }
 }

@@ -44,4 +44,8 @@ public class UserRepository {
                 user.getEmail(),
                 user.getId().get());
     }
+
+    public void delete(Integer userId) {
+        jdbcTemplate.update("UPDATE USERS SET ENABLED = FALSE WHERE ID = ?", userId);
+    }
 }
