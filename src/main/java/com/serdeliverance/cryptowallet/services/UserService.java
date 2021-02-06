@@ -22,6 +22,6 @@ public class UserService {
     }
 
     public List<User> getAll() {
-        return new ArrayList<>();
+        return userRepository.getAll();
     }
 }
