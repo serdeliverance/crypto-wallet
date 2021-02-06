@@ -30,11 +30,14 @@ public class UserService {
     }
 
     public void update(User user) {
-        Integer id = user.getId().get();
-        if (!this.exists(id)) {
-            throw new ResourceNotFoundException("user: " + id);
-        }
-        userRepository.update(user);
+        boolean exists = user.getId()
+                .flatMap(id -> this.get(id))
+                .isPresent();
+        if (exists) {
+            userRepository.update(user);
+        } else throw new ResourceNotFoundException("user: " + user.getId().get());
+
+
     }
 
     private boolean exists(Integer userId) {
