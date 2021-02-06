@@ -2,9 +2,9 @@ DROP DATABASE IF EXISTS cryptodb;
 CREATE DATABASE cryptodb;
 \c cryptodb;
 
-DROP TABLE IF EXISTS "user";
+DROP TABLE IF EXISTS "users";
 
-CREATE TABLE IF NOT EXISTS "user" (
+CREATE TABLE IF NOT EXISTS "users" (
   id BIGSERIAL,
   username VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS "transaction" (
   operation_type VARCHAR(50) NOT NULL,
   transaction_date VARCHAR(255) NOT NULL,
   PRIMARY KEY(id),
-  CONSTRAINT fk_user_id FOREIGN KEY(user_id) REFERENCES "user"(id),
+  CONSTRAINT fk_user_id FOREIGN KEY(user_id) REFERENCES "users"(id),
   CONSTRAINT fk_cryptocurrency FOREIGN KEY(crypto_currency_id) REFERENCES cryptocurrency(id)
 );
 
@@ -137,7 +137,7 @@ INSERT INTO "cryptocurrency" ("id", "name", "symbol") VALUES
 (99,	'Bitcoin BEP2',	'BTCB'),
 (100,	'Paxos Standard',	'PAX');
 
-INSERT INTO "user" ("id", "username", "password", "email") VALUES
+INSERT INTO "users" ("id", "username", "password", "email") VALUES
 (1,	'freeman.mohr',	'0l6lyyy8x',	'Romana.Pagac@gmail.com'),
 (2,	'tobias.shields',	's26i95xz49e4ko',	'Lasandra.Ward@gmail.com'),
 (3,	'houston.luettgen',	'lkf9ttsxcy',	'Virgilio.Miller@gmail.com'),
