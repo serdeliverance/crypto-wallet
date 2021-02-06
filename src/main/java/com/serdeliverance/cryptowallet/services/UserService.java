@@ -36,11 +36,5 @@ public class UserService {
         if (exists) {
             userRepository.update(user);
         } else throw new ResourceNotFoundException("user: " + user.getId().get());
-
-
-    }
-
-    private boolean exists(Integer userId) {
-        return this.get(userId).isPresent();
     }
 }
