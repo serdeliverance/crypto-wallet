@@ -1,5 +1,22 @@
 # crypto-wallet
 
+A demo crypto wallet app using with teaching purposes. This app allows clients to manage their crypto currency portfolio. It uses [Coinmarketcap API](https://coinmarketcap.com/api/) for getting accurate cryptocurrencies quotation.
+
+It provides the following functionalities:
+
+* managing users (CRUD operations, uses for admins)
+* buy, sell and transfer crypto currencies
+* allow users to see their portfolio balance (the quotation of their cryptocurrencies portfolio converted to USD)
+* allows users to see their transaction history
+
+## Tech Stack
+
+* Java 11
+* Spring Boot
+* Postgres
+* Kafka
+* Docker
+
 ## Architecture
 
 The following diagram shows the system architecture:
