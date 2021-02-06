@@ -1,10 +1,10 @@
 package com.serdeliverance.cryptowallet.services;
 
 import com.serdeliverance.cryptowallet.domain.User;
+import com.serdeliverance.cryptowallet.exceptions.ResourceNotFoundException;
 import com.serdeliverance.cryptowallet.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,5 +27,17 @@ public class UserService {
 
     public void create(User user) {
         userRepository.save(user);
+    }
+
+    public void update(User user) {
+        Integer id = user.getId().get();
+        if (!this.exists(id)) {
+            throw new ResourceNotFoundException("user: " + id);
+        }
+        userRepository.update(user);
+    }
+
+    private boolean exists(Integer userId) {
+        return this.get(userId).isPresent();
     }
 }

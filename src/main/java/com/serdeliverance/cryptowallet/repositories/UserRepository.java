@@ -36,4 +36,12 @@ public class UserRepository {
                 user.getPassword(),
                 user.getEmail());
     }
+
+    public void update(User user) {
+        jdbcTemplate.update("UPDATE USERS SET USERNAME = ?, PASSWORD = ?, EMAIL = ? WHERE ID = ?",
+                user.getUsername(),
+                user.getPassword(),
+                user.getEmail(),
+                user.getId().get());
+    }
 }

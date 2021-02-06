@@ -2,6 +2,7 @@ package com.serdeliverance.cryptowallet.converters;
 
 import com.serdeliverance.cryptowallet.domain.User;
 import com.serdeliverance.cryptowallet.dto.CreateUserDTO;
+import com.serdeliverance.cryptowallet.dto.UpdateUserDTO;
 import com.serdeliverance.cryptowallet.dto.UserDTO;
 
 import java.util.Optional;
@@ -25,5 +26,14 @@ public class UserDTOConverter {
                 createUserDTO.getUsername(),
                 createUserDTO.getPassword(),
                 createUserDTO.getEmail());
+    }
+
+    public static User convertToModel(Integer id, UpdateUserDTO updateUserDTO) {
+        return new User(
+                Optional.of(id),
+                updateUserDTO.getUsername(),
+                updateUserDTO.getPassword(),
+                updateUserDTO.getEmail()
+        );
     }
 }
