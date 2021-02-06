@@ -28,4 +28,12 @@ public class UserRepository {
     public List<User> getAll() {
         return jdbcTemplate.query("SELECT ID, USERNAME, PASSWORD, EMAIL FROM USERS", userRowMapper);
     }
+
+    public void save(User user) {
+        jdbcTemplate.update(
+                "INSERT INTO USERS(USERNAME, PASSWORD, EMAIL) VALUES(?, ?, ?)",
+                user.getUsername(),
+                user.getPassword(),
+                user.getEmail());
+    }
 }

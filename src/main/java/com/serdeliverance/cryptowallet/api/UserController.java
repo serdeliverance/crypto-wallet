@@ -1,18 +1,22 @@
 package com.serdeliverance.cryptowallet.api;
 
 import com.serdeliverance.cryptowallet.converters.UserDTOConverter;
+import com.serdeliverance.cryptowallet.domain.User;
+import com.serdeliverance.cryptowallet.dto.CreateUserDTO;
 import com.serdeliverance.cryptowallet.dto.UserDTO;
 import com.serdeliverance.cryptowallet.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.ResourceAccessException;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.serdeliverance.cryptowallet.converters.UserDTOConverter.convertToDTO;
+import static com.serdeliverance.cryptowallet.converters.UserDTOConverter.convertToModel;
 
 @RestController
 @RequestMapping("/users")
@@ -43,5 +47,12 @@ public class UserController {
                 .stream()
                 .map(UserDTOConverter::convertToDTO)
                 .collect(Collectors.toList());
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void create(@RequestBody CreateUserDTO user) {
+        LOGGER.info("creating user...");
+        userService.create(convertToModel(user));
     }
 }

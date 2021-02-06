@@ -24,4 +24,8 @@ public class UserService {
     public List<User> getAll() {
         return userRepository.getAll();
     }
+
+    public void create(User user) {
+        userRepository.save(user);
+    }
 }
