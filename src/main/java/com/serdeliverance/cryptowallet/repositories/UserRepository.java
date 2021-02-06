@@ -21,12 +21,12 @@ public class UserRepository {
 
     public Optional<User> find(Integer id) {
         return jdbcTemplate.query(
-                "SELECT ID, USERNAME, PASSWORD, EMAIL FROM USERS WHERE ID = ?",
+                "SELECT ID, USERNAME, PASSWORD, EMAIL FROM USERS WHERE ENABLED = TRUE AND ID = ?",
                 userRowMapper, id).stream().findFirst();
     }
 
     public List<User> getAll() {
-        return jdbcTemplate.query("SELECT ID, USERNAME, PASSWORD, EMAIL FROM USERS", userRowMapper);
+        return jdbcTemplate.query("SELECT ID, USERNAME, PASSWORD, EMAIL FROM USERS WHERE ENABLED = TRUE", userRowMapper);
     }
 
     public void save(User user) {

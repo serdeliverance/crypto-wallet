@@ -35,3 +35,9 @@ curl -X PUT -H "Content-Type: application/json" \
     -d '{"username": "pepe", "password": "pass1234", "email": "pepe@gmail.com"}' \
     http://localhost:8080/users/:userId
 ```
+
+* Delete user
+
+```
+curl -X "DELETE" http://localhost:8080/users/:userId
+```

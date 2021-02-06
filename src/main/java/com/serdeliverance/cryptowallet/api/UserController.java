@@ -4,6 +4,7 @@ import com.serdeliverance.cryptowallet.converters.UserDTOConverter;
 import com.serdeliverance.cryptowallet.dto.CreateUserDTO;
 import com.serdeliverance.cryptowallet.dto.UpdateUserDTO;
 import com.serdeliverance.cryptowallet.dto.UserDTO;
+import com.serdeliverance.cryptowallet.exceptions.ResourceNotFoundException;
 import com.serdeliverance.cryptowallet.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +36,7 @@ public class UserController {
         return userService
                 .get(id)
                 .map(UserDTOConverter::convertToDTO)
-                .orElseThrow(() -> new ResourceAccessException("user:" + id));
+                .orElseThrow(() -> new ResourceNotFoundException("user:" + id));
     }
 
     @GetMapping
