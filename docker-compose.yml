@@ -8,7 +8,7 @@ services:
       - "TZ=Europe/Amsterdam"
       - "POSTGRES_USER=root"
       - "POSTGRES_PASSWORD=root"
-      - "POSTGRES_DB=fpgdb"
+      - "POSTGRES_DB=cryptodb"
     ports:
       - 45432:5432
     volumes:
