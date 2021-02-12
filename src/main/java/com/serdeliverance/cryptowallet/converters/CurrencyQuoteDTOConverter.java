@@ -1,6 +1,6 @@
 package com.serdeliverance.cryptowallet.converters;
 
-import com.serdeliverance.cryptowallet.clients.response.CotizationResponseDTO;
+import com.serdeliverance.cryptowallet.clients.response.ListingQuotesResponseDTO;
 import com.serdeliverance.cryptowallet.dto.CurrencyQuoteDTO;
 
 import java.util.List;
@@ -10,7 +10,7 @@ public class CurrencyQuoteDTOConverter {
 
     private static final String USD_CURRENCY = "USD";
 
-    public static List<CurrencyQuoteDTO> convertFromResponse(CotizationResponseDTO response) {
+    public static List<CurrencyQuoteDTO> convertFromResponse(ListingQuotesResponseDTO response) {
         return response.getData()
                 .stream()
                 .map(elem -> new CurrencyQuoteDTO(elem.getName(), elem.getQuote().get(USD_CURRENCY).getPrice()))

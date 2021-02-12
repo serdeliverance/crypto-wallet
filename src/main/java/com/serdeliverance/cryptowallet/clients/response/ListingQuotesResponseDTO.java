@@ -9,6 +9,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CotizationResponseDTO {
+public class ListingQuotesResponseDTO {
     private List<ListingElementDTO> data;
 }

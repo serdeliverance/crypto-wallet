@@ -1,6 +1,6 @@
 package com.serdeliverance.cryptowallet.clients;
 
-import com.serdeliverance.cryptowallet.clients.response.CotizationResponseDTO;
+import com.serdeliverance.cryptowallet.clients.response.ListingQuotesResponseDTO;
 import com.serdeliverance.cryptowallet.exceptions.RemoteApiException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,13 +24,13 @@ public class CoinmarketCapClient {
     @Value("${coinmarketcap.url}")
     private String url;
 
-    public CotizationResponseDTO cotizations() {
-        log.info("Getting cotizations from coinmarketcap");
-        ResponseEntity<CotizationResponseDTO> response = restTemplate.exchange(url, HttpMethod.GET, createEntityWithHeader(API_KEY_HEADER, apiKey), CotizationResponseDTO.class);
+    public ListingQuotesResponseDTO quotes() {
+        log.info("Getting quotes from coinmarketcap");
+        ResponseEntity<ListingQuotesResponseDTO> response = restTemplate.exchange(url, HttpMethod.GET, createEntityWithHeader(API_KEY_HEADER, apiKey), ListingQuotesResponseDTO.class);
         return handleResponse(response);
     }
 
-    private CotizationResponseDTO handleResponse(ResponseEntity<CotizationResponseDTO> response) {
+    private ListingQuotesResponseDTO handleResponse(ResponseEntity<ListingQuotesResponseDTO> response) {
         if (response.getStatusCode() != HttpStatus.OK) {
             log.error("Coinmarketcap responded with {} status code", response.getStatusCodeValue());
             throw new RemoteApiException("error communicating with coinmarketcap API");

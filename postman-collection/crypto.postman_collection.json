@@ -110,7 +110,7 @@
 			"response": []
 		},
 		{
-			"name": "get coins cotization",
+			"name": "get coins quotes",
 			"request": {
 				"method": "GET",
 				"header": [],

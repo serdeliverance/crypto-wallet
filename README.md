@@ -87,7 +87,7 @@ curl -X PUT -H "Content-Type: application/json" \
 curl -X "DELETE" http://localhost:8080/users/:userId
 ```
 
-* Get cotizations
+* Get quotes
 
 ```
 curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://localhost:8080/cryptocurrencies/quotes

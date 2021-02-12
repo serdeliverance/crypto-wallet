@@ -20,6 +20,7 @@ public class CryptocurrencyController {
 
     @GetMapping("/quotes")
     public List<CurrencyQuoteDTO> quotes() {
+        log.info("Getting quotes");
         return cryptocurrencyService.getAll();
     }
 }

@@ -18,7 +18,7 @@ public class CryptocurrencyService {
     private CoinmarketCapClient coinmarketCapClient;
 
     public List<CurrencyQuoteDTO> getAll() {
-        log.info("Getting cotizations");
-        return convertFromResponse(coinmarketCapClient.cotizations());
+        log.info("Getting quotes");
+        return convertFromResponse(coinmarketCapClient.quotes());
     }
 }
