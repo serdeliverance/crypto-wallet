@@ -9,6 +9,6 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-class QuoteDTO {
+public class QuoteDTO {
     private BigDecimal price;
 }

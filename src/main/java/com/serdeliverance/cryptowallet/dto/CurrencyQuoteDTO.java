@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CurrencyQuoteDTO {
-    private Long id;
     private String crypto;
-    private BigDecimal valueInUsd;
+    private BigDecimal quoteInUsd;
 }

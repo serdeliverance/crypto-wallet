@@ -9,7 +9,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-class ListingElementDTO {
+public class ListingElementDTO {
     private String name;
     private String symbol;
     private Map<String, QuoteDTO> quote;
