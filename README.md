@@ -87,6 +87,12 @@ curl -X PUT -H "Content-Type: application/json" \
 curl -X "DELETE" http://localhost:8080/users/:userId
 ```
 
+* Get cotizations
+
+```
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://localhost:8080/cryptocurrencies/quotes
+```
+
 ## Extra notes
 
 * A ready [docker-compose](docker-compose.yml) is provided. It contains all the components ready for local development. It also contains dummy data for playing around with the app.
