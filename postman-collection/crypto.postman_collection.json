@@ -15,15 +15,6 @@
 			"response": []
 		},
 		{
-			"name": "coinmarketcap_currencies",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": null
-			},
-			"response": []
-		},
-		{
 			"name": "get user by id",
 			"request": {
 				"method": "GET",
@@ -115,6 +106,15 @@
 						"15"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "get coins cotization",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
 			},
 			"response": []
 		}
