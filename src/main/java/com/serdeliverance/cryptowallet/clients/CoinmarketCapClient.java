@@ -2,7 +2,7 @@ package com.serdeliverance.cryptowallet.clients;
 
 import com.serdeliverance.cryptowallet.clients.response.CotizationResponseDTO;
 import com.serdeliverance.cryptowallet.exceptions.RemoteApiException;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -10,13 +10,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class CoinmarketCapClient {
 
     private static final String API_KEY_HEADER = "X-CMC_PRO_API_KEY";
 
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     @Value("${coinmarketcap.api-key}")
     private String apiKey;
