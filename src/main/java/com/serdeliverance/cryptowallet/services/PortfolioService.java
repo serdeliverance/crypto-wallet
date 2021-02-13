@@ -7,7 +7,7 @@ import com.serdeliverance.cryptowallet.dto.CurrencyTotalDTO;
 import com.serdeliverance.cryptowallet.dto.PorfolioDTO;
 import com.serdeliverance.cryptowallet.exceptions.ResourceNotFoundException;
 import com.serdeliverance.cryptowallet.repositories.TransactionRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -17,26 +17,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.serdeliverance.cryptowallet.dto.PorfolioDTO.emptyPortfolio;
 import static java.util.stream.Collectors.groupingBy;
 
 @Service
+@RequiredArgsConstructor
 @Slf4j
-@AllArgsConstructor
 public class PortfolioService {
 
-    private UserService userService;
-    private CryptocurrencyService cryptocurrencyService;
-    private TransactionRepository transactionRepository;
+    private final UserService userService;
+    private final CryptocurrencyService cryptocurrencyService;
+    private final TransactionRepository transactionRepository;
 
     public PorfolioDTO getPortfolio(Integer userId) {
         log.info("Getting portfolio for userId: {}", userId);
         validateUser(userId);
-        return buildPorfolio(userId, transactionRepository.getByUser(userId));
+        List<Transaction> transactions = transactionRepository.getByUser(userId);
+        return !transactions.isEmpty() ? buildPorfolio(userId, transactions) : emptyPortfolio(userId, LocalDateTime.now());
     }
 
     private PorfolioDTO buildPorfolio(Integer userId, List<Transaction> transactions) {
         log.debug("Building crypto portfolio");
-        Map<String, BigDecimal> quotesMap = cryptocurrencyService.quotes().stream()
+        Map<String, BigDecimal> quotesInUSD = cryptocurrencyService.quotes().stream()
                 .collect(Collectors.toMap(CurrencyQuoteDTO::getCrypto, crypto -> crypto.getQuoteInUsd()));
         Map<Integer, String> cryptoMap = cryptocurrencyService
                 .getByIdList(transactions.stream().map(tx -> tx.getCryptocurrencyId()).distinct().collect(Collectors.toList()))
@@ -52,7 +54,8 @@ public class PortfolioService {
                                         .map(tx -> tx.getAmount())
                                         .reduce(BigDecimal.ZERO, BigDecimal::add)))
                 .collect(Collectors.toList());
-        BigDecimal totalInUSD = currencies.stream().map(crypto -> crypto.getAmount()).reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal totalInUSD = currencies.stream()
+                .map(crypto -> crypto.getAmount().multiply(quotesInUSD.get(crypto.getCurrency()))).reduce(BigDecimal.ZERO, BigDecimal::add);
         return new PorfolioDTO(userId, currencies, totalInUSD, LocalDateTime.now());
     }
 

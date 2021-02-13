@@ -1,6 +1,6 @@
 # crypto-wallet
 
-A demo crypto wallet app using with teaching purposes. This app allows clients to manage their crypto currency portfolio. It uses [Coinmarketcap API](https://coinmarketcap.com/api/) for getting accurate cryptocurrencies quotation.
+A demo crypto wallet app using with teaching purposes. This app allows clients to manage their crypto currency portfolio. It uses [Coinmarketcap API](https://coinmarketcap.com/api/) for getting the updated cryptocurrencies quotation.
 
 It provides the following functionalities:
 
@@ -93,6 +93,11 @@ curl -X "DELETE" http://localhost:8080/users/:userId
 curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://localhost:8080/cryptocurrencies/quotes
 ```
 
+* Get portfolio
+
+```
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://localhost:8080/portfolios/:userId
+```
 ## Extra notes
 
 * A ready [docker-compose](docker-compose.yml) is provided. It contains all the components ready for local development. It also contains dummy data for playing around with the app.

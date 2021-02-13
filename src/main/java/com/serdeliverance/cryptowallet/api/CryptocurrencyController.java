@@ -2,7 +2,7 @@ package com.serdeliverance.cryptowallet.api;
 
 import com.serdeliverance.cryptowallet.dto.CurrencyQuoteDTO;
 import com.serdeliverance.cryptowallet.services.CryptocurrencyService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,11 +12,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cryptocurrencies")
+@RequiredArgsConstructor
 @Slf4j
-@AllArgsConstructor
 public class CryptocurrencyController {
 
-    private CryptocurrencyService cryptocurrencyService;
+    private final CryptocurrencyService cryptocurrencyService;
 
     @GetMapping("/quotes")
     public List<CurrencyQuoteDTO> quotes() {

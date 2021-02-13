@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -17,4 +18,8 @@ public class PorfolioDTO {
     private List<CurrencyTotalDTO> currencies;
     private BigDecimal totalInUSD;
     private LocalDateTime date;
+
+    public static PorfolioDTO emptyPortfolio(Integer userId, LocalDateTime date) {
+        return new PorfolioDTO(userId, Collections.emptyList(), BigDecimal.ZERO, date);
+    }
 }

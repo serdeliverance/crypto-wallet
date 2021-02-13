@@ -18,7 +18,7 @@ public class TransactionRepository {
 
     public List<Transaction> getByUser(Integer userId) {
 
-        return jdbcTemplate.query("SELECT ID, USER_ID, CRYPTO_CURRENCY_ID, AMOUNT, OPERATION_TYPE, TRANSACTION_DATE FROM \"TRANSACTION\" WHERE ID = ?",
+        return jdbcTemplate.query("SELECT ID, USER_ID, CRYPTO_CURRENCY_ID, AMOUNT, OPERATION_TYPE, TRANSACTION_DATE FROM TRANSACTION WHERE USER_ID = ?",
                 (rs, rowNum) ->
                         new Transaction(
                                 rs.getLong("id"),
