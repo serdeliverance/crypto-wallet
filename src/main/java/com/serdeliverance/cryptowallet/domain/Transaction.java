@@ -12,8 +12,9 @@ import java.math.BigDecimal;
 public class Transaction {
 
     private Long id;
-    private User user;
-    private Cryptocurrency cryptocurrency;
+    private Integer userId;
+    private Integer cryptocurrencyId;
     private BigDecimal amount;
-    private OperationType type;
+    private OperationType operationType;
+    private String transactionDate;
 }
