@@ -35,11 +35,9 @@ public class PortfolioService {
     }
 
     private PorfolioDTO buildPorfolio(Integer userId, List<Transaction> transactions) {
-        log.debug("Buildig crypto porfolio");
-        // getting quotes from cryptomarketcap
+        log.debug("Building crypto portfolio");
         Map<String, BigDecimal> quotesMap = cryptocurrencyService.quotes().stream()
                 .collect(Collectors.toMap(CurrencyQuoteDTO::getCrypto, crypto -> crypto.getQuoteInUsd()));
-        // convenient map<idCrypto, name>
         Map<Integer, String> cryptoMap = cryptocurrencyService
                 .getByIdList(transactions.stream().map(tx -> tx.getCryptocurrencyId()).distinct().collect(Collectors.toList()))
                 .stream()
