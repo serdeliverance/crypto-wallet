@@ -154,6 +154,5 @@ public class PortfolioServiceSpec {
 
         // then
         assertThrows(ResourceNotFoundException.class, () -> portfolioService.getPortfolio(userId));
-
     }
 }

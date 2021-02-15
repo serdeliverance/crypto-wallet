@@ -78,7 +78,7 @@ public class TransactionServiceSpec {
         when(transactionRepository.getByUser(userId)).thenReturn(singletonList(
             new Transaction(12L, 1, 1, BigDecimal.valueOf(2), BUY, "2021-02-05T19:28:43.111")
         ));
-        
+
         when(cryptocurrencyService.getByIdList(singletonList(1))).thenReturn(asList(
             new Cryptocurrency(1, "Bitcoin", "BTC"))
         );
