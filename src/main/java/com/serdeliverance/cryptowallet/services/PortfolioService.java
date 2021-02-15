@@ -31,7 +31,7 @@ public class PortfolioService {
 
     public PorfolioDTO getPortfolio(Integer userId) {
         log.info("Getting portfolio for userId: {}", userId);
-        validateUser(userId);
+        userService.validateUser(userId);
         List<Transaction> transactions = transactionRepository.getByUser(userId);
         return !transactions.isEmpty() ? buildPorfolio(userId, transactions) : emptyPortfolio(userId, LocalDateTime.now());
     }
@@ -57,10 +57,5 @@ public class PortfolioService {
         BigDecimal totalInUSD = currencies.stream()
                 .map(crypto -> crypto.getAmount().multiply(quotesInUSD.get(crypto.getCurrency()))).reduce(BigDecimal.ZERO, BigDecimal::add);
         return new PorfolioDTO(userId, currencies, totalInUSD, LocalDateTime.now());
-    }
-
-    private void validateUser(Integer userId) {
-        log.info("Validating user {}", userId);
-        userService.get(userId).orElseThrow(() -> new ResourceNotFoundException("user not found"));
     }
 }
