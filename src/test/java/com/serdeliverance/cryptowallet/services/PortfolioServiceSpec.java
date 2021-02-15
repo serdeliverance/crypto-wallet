@@ -6,7 +6,9 @@ import com.serdeliverance.cryptowallet.domain.User;
 import com.serdeliverance.cryptowallet.dto.CurrencyQuoteDTO;
 import com.serdeliverance.cryptowallet.dto.CurrencyTotalDTO;
 import com.serdeliverance.cryptowallet.dto.PorfolioDTO;
+import com.serdeliverance.cryptowallet.exceptions.ResourceNotFoundException;
 import com.serdeliverance.cryptowallet.repositories.TransactionRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,6 +23,8 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.EMPTY_LIST;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -47,10 +51,6 @@ public class PortfolioServiceSpec {
         // given
         Integer userId = 1;
 
-        when(userService.get(userId)).thenReturn(
-            Optional.of(new User(Optional.of(1), "pepe", "pass1234", "pepe@gmail.com"))
-        );
-
         when(transactionRepository.getByUser(userId)).thenReturn(EMPTY_LIST);
 
         // when
@@ -66,10 +66,6 @@ public class PortfolioServiceSpec {
     void whenUserHasTransactionsWithOneCurrencyItShouldReturnPorfolio() {
         // given
         Integer userId = 1;
-
-        when(userService.get(userId)).thenReturn(
-            Optional.of(new User(Optional.of(1), "pepe", "pass1234", "pepe@gmail.com"))
-        );
 
         when(transactionRepository.getByUser(userId)).thenReturn(asList(
             new Transaction(23L, 1, 1, BigDecimal.valueOf(2), BUY, "2021-02-05T19:29:03.239"),
@@ -104,10 +100,6 @@ public class PortfolioServiceSpec {
         BigDecimal bitcoinQuote = BigDecimal.valueOf(48081.979491230726);
         BigDecimal ethereumQuote = BigDecimal.valueOf(1810.264184795378);
         BigDecimal tetherQuote = BigDecimal.valueOf(1.00048112681234);
-
-        when(userService.get(userId)).thenReturn(
-            Optional.of(new User(Optional.of(1), "pepe", "pass1234", "pepe@gmail.com"))
-        );
 
         when(transactionRepository.getByUser(userId)).thenReturn(asList(
             new Transaction(23L, 1, 1, BigDecimal.valueOf(2), BUY, "2021-02-05T19:29:03.239"),
@@ -151,5 +143,16 @@ public class PortfolioServiceSpec {
         assertThat(resultEthereumTotal).isEqualTo(expectedEthereumTotal);
         assertThat(resultTetherTotal).isEqualTo(expectedTetherTotal);
         assertThat(result.getTotalInUSD()).isEqualTo(expectedTotalInUsd);
+    }
+
+    @Test
+    public void whenUserNotExistsItShouldThrowResourceNotFoundException() {
+        // given
+        Integer userId = 12;
+
+        doThrow(ResourceNotFoundException.class).when(userService).validateUser(userId);
+
+        // then
+        assertThrows(ResourceNotFoundException.class, () -> portfolioService.getPortfolio(userId));
     }
 }
