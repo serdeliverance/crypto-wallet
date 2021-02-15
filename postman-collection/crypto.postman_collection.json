@@ -169,6 +169,26 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "get transaction history",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/transactions/8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transactions",
+						"8"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

@@ -3,7 +3,6 @@ package com.serdeliverance.cryptowallet.services;
 import com.serdeliverance.cryptowallet.domain.Cryptocurrency;
 import com.serdeliverance.cryptowallet.domain.Transaction;
 import com.serdeliverance.cryptowallet.dto.TransactionDTO;
-import com.serdeliverance.cryptowallet.exceptions.ResourceNotFoundException;
 import com.serdeliverance.cryptowallet.repositories.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
