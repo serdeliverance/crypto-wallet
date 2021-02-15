@@ -26,7 +26,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class TransactionServiceSpec {
+public class TransactionServiceTest {
 
     @Mock
     private UserService userService;
