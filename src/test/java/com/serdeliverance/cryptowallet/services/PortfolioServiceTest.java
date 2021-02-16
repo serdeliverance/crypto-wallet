@@ -28,7 +28,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class PortfolioServiceSpec {
+public class PortfolioServiceTest {
 
     @Mock
     private UserService userService;

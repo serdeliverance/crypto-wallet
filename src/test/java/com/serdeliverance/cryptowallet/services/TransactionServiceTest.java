@@ -26,7 +26,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class TransactionServiceSpec {
+public class TransactionServiceTest {
 
     @Mock
     private UserService userService;
@@ -37,11 +37,14 @@ public class TransactionServiceSpec {
     @Mock
     private CryptocurrencyService cryptocurrencyService;
 
+    @Mock
+    private PortfolioService portfolioService;
+
     private TransactionService transactionService;
 
     @BeforeEach
     void setup() {
-        transactionService = new TransactionService(transactionRepository, cryptocurrencyService, userService);
+        transactionService = new TransactionService(transactionRepository, cryptocurrencyService, userService, portfolioService);
     }
 
     @Test
