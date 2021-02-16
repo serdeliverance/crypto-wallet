@@ -5,7 +5,6 @@ import com.serdeliverance.cryptowallet.domain.Transaction;
 import com.serdeliverance.cryptowallet.dto.CurrencyQuoteDTO;
 import com.serdeliverance.cryptowallet.dto.CurrencyTotalDTO;
 import com.serdeliverance.cryptowallet.dto.PorfolioDTO;
-import com.serdeliverance.cryptowallet.exceptions.ResourceNotFoundException;
 import com.serdeliverance.cryptowallet.repositories.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,5 +56,10 @@ public class PortfolioService {
         BigDecimal totalInUSD = currencies.stream()
                 .map(crypto -> crypto.getAmount().multiply(quotesInUSD.get(crypto.getCurrency()))).reduce(BigDecimal.ZERO, BigDecimal::add);
         return new PorfolioDTO(userId, currencies, totalInUSD, LocalDateTime.now());
+    }
+
+    public void validateTransference(Integer issuer, String cryptocurrency, BigDecimal amount) {
+        log.info("Validating transference data. issuer={}, cryptocurrency={}, amount={}", issuer, cryptocurrency, amount);
+        // TODO validate if user has the amount to perform transference
     }
 }

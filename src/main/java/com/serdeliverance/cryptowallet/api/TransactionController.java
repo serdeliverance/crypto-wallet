@@ -1,13 +1,12 @@
 package com.serdeliverance.cryptowallet.api;
 
 import com.serdeliverance.cryptowallet.dto.TransactionDTO;
+import com.serdeliverance.cryptowallet.dto.TransferenceDTO;
 import com.serdeliverance.cryptowallet.services.TransactionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,5 +22,14 @@ public class TransactionController {
     public List<TransactionDTO> getHistory(@PathVariable("userId") Integer userId) {
         log.info("Getting transaction history for userId: {}", userId);
         return transactionService.getHistory(userId);
+    }
+
+    @PostMapping("/transferences")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void transfer(@RequestBody TransferenceDTO transferenceDTO) {
+        log.info("Performing transference from issuer {} to receiver {}",
+                transferenceDTO.getIssuer(), transferenceDTO.getReceiver());
+        transactionService.transfer(transferenceDTO.getIssuer(), transferenceDTO.getReceiver(),
+                transferenceDTO.getCryptocurrency(), transferenceDTO.getAmount());
     }
 }
