@@ -32,7 +32,7 @@ public class TransactionRepository {
                 userId);
     }
 
-    public void transfer(Integer userId, Integer cryptocurrencyId, BigDecimal amount, OperationType operationType, LocalDateTime transactionDate) {
+    public void saveTransaction(Integer userId, Integer cryptocurrencyId, BigDecimal amount, OperationType operationType, LocalDateTime transactionDate) {
         jdbcTemplate.update("INSERT INTO TRANSACTION(USER_ID, CRYPTO_CURRENCY_ID, AMOUNT, OPERATION_TYPE, TRANSACTION_DATE) VALUES(?, ?, ?, ?, ?)",
                 userId, cryptocurrencyId, amount, operationType.name(), transactionDate.toString());
     }

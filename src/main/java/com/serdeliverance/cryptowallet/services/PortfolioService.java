@@ -59,13 +59,13 @@ public class PortfolioService {
         return new PorfolioDTO(userId, currencies, totalInUSD, LocalDateTime.now());
     }
 
-    public void validateTransference(Integer userId, String cryptocurrency, BigDecimal amount) {
-        log.info("Validating transference data. issuer={}, cryptocurrency={}, amount={}", userId, cryptocurrency, amount);
+    public void validateFunds(Integer userId, String cryptocurrency, BigDecimal amount) {
+        log.info("Validating funds for selling/transferring data. userId={}, cryptocurrency={}, amount={}", userId, cryptocurrency, amount);
         BigDecimal currencyTotal = transactionRepository
                 .getByUser(userId)
                 .stream()
                 .filter(tx -> tx.getCryptocurrencyId().equals(cryptocurrencyService.getByName(cryptocurrency).getId()))
                 .map(Transaction::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
-        if (currencyTotal.compareTo(amount) < 0) throw new InvalidOperationException("Insufficient funds for transference");
+        if (currencyTotal.compareTo(amount) < 0) throw new InvalidOperationException("Insufficient funds for transference/selling");
     }
 }
