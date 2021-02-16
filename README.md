@@ -113,6 +113,22 @@ curl -X POST -H "Content-Type: application/json" \
     http://localhost:8080/transactions/transferences
 ```
 
+* Buy
+
+```
+curl -X POST -H "Content-Type: application/json" \
+    -d '{"userId": 3, "cryptocurrency": "Bitcoin", "amountInUsd": 100000}' \
+    http://localhost:8080/transactions/buys
+```
+
+* Sell
+
+```
+curl -X POST -H "Content-Type: application/json" \
+    -d '{"userId": 3, "cryptocurrency": "Bitcoin", "amount": 1}' \
+    http://localhost:8080/transactions/sells
+```
+
 ## Extra notes
 
 * A ready [docker-compose](docker-compose.yml) is provided. It contains all the components ready for local development. It also contains dummy data for playing around with the app.

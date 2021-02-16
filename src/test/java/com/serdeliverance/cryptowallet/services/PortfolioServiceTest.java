@@ -166,7 +166,7 @@ public class PortfolioServiceTest {
             );
 
         // when/then
-        assertThrows(InvalidOperationException.class, () -> portfolioService.validateTransference(2, "Bitcoin", BigDecimal.valueOf(10)));
+        assertThrows(InvalidOperationException.class, () -> portfolioService.validateFunds(2, "Bitcoin", BigDecimal.valueOf(10)));
     }
 
     @Test
@@ -181,6 +181,6 @@ public class PortfolioServiceTest {
             );
 
         // when/then
-        portfolioService.validateTransference(2, "Bitcoin", BigDecimal.ONE);
+        portfolioService.validateFunds(2, "Bitcoin", BigDecimal.ONE);
     }
 }

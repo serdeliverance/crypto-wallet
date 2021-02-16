@@ -2,7 +2,6 @@ package com.serdeliverance.cryptowallet.services;
 
 import com.serdeliverance.cryptowallet.domain.Cryptocurrency;
 import com.serdeliverance.cryptowallet.domain.Transaction;
-import com.serdeliverance.cryptowallet.dto.CurrencyQuoteDTO;
 import com.serdeliverance.cryptowallet.dto.TransactionDTO;
 import com.serdeliverance.cryptowallet.exceptions.InvalidOperationException;
 import com.serdeliverance.cryptowallet.exceptions.ResourceNotFoundException;
@@ -133,7 +132,7 @@ public class TransactionServiceTest {
     @Test
     public void whenUserAmountIsInvalidItShouldThrowInvalidaOperationException() {
         // given
-        doThrow(InvalidOperationException.class).when(portfolioService).validateTransference(12, "Bitcoin", BigDecimal.ONE);
+        doThrow(InvalidOperationException.class).when(portfolioService).validateFunds(12, "Bitcoin", BigDecimal.ONE);
 
         // when/then
         assertThrows(InvalidOperationException.class, () ->

@@ -35,6 +35,12 @@ public class CryptocurrencyService {
         log.info("Searching cryptocurrency: {}", cryptocurrency);
         return cryptocurrencyRepository
                 .getByName(cryptocurrency)
-                .orElseThrow(() -> new ResourceNotFoundException("cryptocurrency with name: " + cryptocurrency));
+                .orElseThrow(() -> new ResourceNotFoundException("not found crypto currency with name: " + cryptocurrency));
+    }
+
+    public CurrencyQuoteDTO getQuote(String cryptocurrency) {
+        return quotes().stream()
+                .filter(crypto -> crypto.getCrypto().equals(cryptocurrency))
+                .findFirst().orElseThrow(() -> new ResourceNotFoundException("not found quote for cryptocurrency: " + cryptocurrency));
     }
 }
