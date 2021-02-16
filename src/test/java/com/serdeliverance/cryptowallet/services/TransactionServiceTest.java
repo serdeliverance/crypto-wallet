@@ -118,4 +118,19 @@ public class TransactionServiceTest {
         assertThat(result).isNotNull();
         assertThat(result.size()).isEqualTo(3);
     }
+
+    @Test
+    public void whenTransferWithInvalidUserItShouldThrowInvalidOperationException() {
+        // TODO
+    }
+
+    @Test
+    public void whenUserAmountIsInvalidItShouldThrowInvalidaOperationException() {
+        // TODO
+    }
+
+    @Test
+    public void whenUserTransferItShouldTransferOk() {
+        // TODO
+    }
 }

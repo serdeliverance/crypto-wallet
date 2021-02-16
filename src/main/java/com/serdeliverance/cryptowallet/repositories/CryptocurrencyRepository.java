@@ -33,7 +33,7 @@ public class CryptocurrencyRepository {
 
     public Optional<Cryptocurrency> getByName(String name) {
         return jdbcTemplate.query(
-                "SELECT ID, NAME, SYMBOL FROM CRYPTOCURRENCY WHERE NAME",
+                "SELECT ID, NAME, SYMBOL FROM CRYPTOCURRENCY WHERE NAME = ?",
                 mapper, name).stream().findFirst();
     }
 }
