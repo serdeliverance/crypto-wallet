@@ -4,6 +4,7 @@ import com.serdeliverance.cryptowallet.domain.Cryptocurrency;
 import com.serdeliverance.cryptowallet.domain.Transaction;
 import com.serdeliverance.cryptowallet.dto.CurrencyQuoteDTO;
 import com.serdeliverance.cryptowallet.dto.TransactionDTO;
+import com.serdeliverance.cryptowallet.exceptions.InvalidOperationException;
 import com.serdeliverance.cryptowallet.exceptions.ResourceNotFoundException;
 import com.serdeliverance.cryptowallet.repositories.TransactionRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,8 +23,7 @@ import static java.util.Collections.EMPTY_LIST;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class TransactionServiceTest {
@@ -121,16 +121,31 @@ public class TransactionServiceTest {
 
     @Test
     public void whenTransferWithInvalidUserItShouldThrowInvalidOperationException() {
-        // TODO
+        // given
+        doNothing().when(userService).validateUser(12);
+        doThrow(ResourceNotFoundException.class).when(userService).validateUser(2);
+
+        // when/then
+        assertThrows(ResourceNotFoundException.class, () ->
+                transactionService.transfer(12, 2, "Bitcoin", BigDecimal.ONE));
     }
 
     @Test
     public void whenUserAmountIsInvalidItShouldThrowInvalidaOperationException() {
-        // TODO
+        // given
+        doThrow(InvalidOperationException.class).when(portfolioService).validateTransference(12, "Bitcoin", BigDecimal.ONE);
+
+        // when/then
+        assertThrows(InvalidOperationException.class, () ->
+                transactionService.transfer(12, 2, "Bitcoin", BigDecimal.ONE));
     }
 
     @Test
     public void whenUserTransferItShouldTransferOk() {
-        // TODO
+        // given
+        when(cryptocurrencyService.getByName("Bitcoin")).thenReturn(new Cryptocurrency(1, "Bitcoin", "BTC"));
+
+        // when/then
+        transactionService.transfer(12, 2, "Bitcoin", BigDecimal.ONE);
     }
 }
