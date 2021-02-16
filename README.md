@@ -105,6 +105,14 @@ curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET
 curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://localhost:8080/transactions/8
 ```
 
+* Transfer
+
+```
+curl -X POST -H "Content-Type: application/json" \
+    -d '{"issuer": "88", "receiver": "2", "cryptocurrency": "Huobi Token", "amount": 10}' \
+    http://localhost:8080/transactions/transferences
+```
+
 ## Extra notes
 
 * A ready [docker-compose](docker-compose.yml) is provided. It contains all the components ready for local development. It also contains dummy data for playing around with the app.

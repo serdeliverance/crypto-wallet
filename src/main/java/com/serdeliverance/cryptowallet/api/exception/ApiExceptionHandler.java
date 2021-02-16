@@ -1,5 +1,6 @@
 package com.serdeliverance.cryptowallet.api.exception;
 
+import com.serdeliverance.cryptowallet.exceptions.InvalidOperationException;
 import com.serdeliverance.cryptowallet.exceptions.RemoteApiException;
 import com.serdeliverance.cryptowallet.exceptions.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -28,5 +29,14 @@ public class ApiExceptionHandler {
         log.info("Resource not found. {}", resourceNotFoundException.getMessage());
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND).build();
+    }
+
+    @ExceptionHandler(value = {InvalidOperationException.class})
+    public ResponseEntity<String> invalidOperation(
+            InvalidOperationException invalidOperationException
+    ) {
+        log.info("Invalid operation. {}", invalidOperationException.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST).build();
     }
 }

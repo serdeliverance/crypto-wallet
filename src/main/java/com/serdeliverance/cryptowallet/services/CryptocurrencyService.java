@@ -3,6 +3,7 @@ package com.serdeliverance.cryptowallet.services;
 import com.serdeliverance.cryptowallet.clients.CoinmarketCapClient;
 import com.serdeliverance.cryptowallet.domain.Cryptocurrency;
 import com.serdeliverance.cryptowallet.dto.CurrencyQuoteDTO;
+import com.serdeliverance.cryptowallet.exceptions.ResourceNotFoundException;
 import com.serdeliverance.cryptowallet.repositories.CryptocurrencyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,5 +29,12 @@ public class CryptocurrencyService {
     public List<Cryptocurrency> getByIdList(List<Integer> ids) {
         log.info("Getting all cryptocurrencies with ids: {}", ids);
         return cryptocurrencyRepository.getByIdList(ids);
+    }
+
+    public Cryptocurrency getByName(String cryptocurrency) {
+        log.info("Searching cryptocurrency: {}", cryptocurrency);
+        return cryptocurrencyRepository
+                .getByName(cryptocurrency)
+                .orElseThrow(() -> new ResourceNotFoundException("cryptocurrency with name: " + cryptocurrency));
     }
 }

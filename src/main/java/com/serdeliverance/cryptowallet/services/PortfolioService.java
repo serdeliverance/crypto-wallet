@@ -5,7 +5,7 @@ import com.serdeliverance.cryptowallet.domain.Transaction;
 import com.serdeliverance.cryptowallet.dto.CurrencyQuoteDTO;
 import com.serdeliverance.cryptowallet.dto.CurrencyTotalDTO;
 import com.serdeliverance.cryptowallet.dto.PorfolioDTO;
-import com.serdeliverance.cryptowallet.exceptions.ResourceNotFoundException;
+import com.serdeliverance.cryptowallet.exceptions.InvalidOperationException;
 import com.serdeliverance.cryptowallet.repositories.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,5 +57,15 @@ public class PortfolioService {
         BigDecimal totalInUSD = currencies.stream()
                 .map(crypto -> crypto.getAmount().multiply(quotesInUSD.get(crypto.getCurrency()))).reduce(BigDecimal.ZERO, BigDecimal::add);
         return new PorfolioDTO(userId, currencies, totalInUSD, LocalDateTime.now());
+    }
+
+    public void validateTransference(Integer userId, String cryptocurrency, BigDecimal amount) {
+        log.info("Validating transference data. issuer={}, cryptocurrency={}, amount={}", userId, cryptocurrency, amount);
+        BigDecimal currencyTotal = transactionRepository
+                .getByUser(userId)
+                .stream()
+                .filter(tx -> tx.getCryptocurrencyId().equals(cryptocurrencyService.getByName(cryptocurrency).getId()))
+                .map(Transaction::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+        if (currencyTotal.compareTo(amount) < 0) throw new InvalidOperationException("Insufficient funds for transference");
     }
 }

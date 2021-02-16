@@ -8,9 +8,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
+import static com.serdeliverance.cryptowallet.domain.OperationType.BUY;
+import static com.serdeliverance.cryptowallet.domain.OperationType.TRANSFERENCE;
 import static java.util.Collections.EMPTY_LIST;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
@@ -23,6 +27,7 @@ public class TransactionService {
     private final TransactionRepository transactionRepository;
     private final CryptocurrencyService cryptocurrencyService;
     private final UserService userService;
+    private final PortfolioService portfolioService;
 
     public List<TransactionDTO> getHistory(Integer userId) {
         log.info("Getting transaction history for userId: {}", userId);
@@ -40,5 +45,14 @@ public class TransactionService {
         return transactions.stream()
                 .map(tx -> new TransactionDTO(tx.getId(), cryptoMap.get(tx.getCryptocurrencyId()), tx.getAmount(), tx.getOperationType().name(), tx.getTransactionDate()))
                 .collect(toList());
+    }
+
+    public void transfer(Integer issuer, Integer receiver, String cryptocurrency, BigDecimal amount) {
+        userService.validateUser(issuer);
+        userService.validateUser(receiver);
+        portfolioService.validateTransference(issuer, cryptocurrency, amount);
+        Integer cryptoCurrencyId = cryptocurrencyService.getByName(cryptocurrency).getId();
+        transactionRepository.transfer(issuer, cryptoCurrencyId, amount.multiply(BigDecimal.valueOf(-1)), TRANSFERENCE, LocalDateTime.now());
+        transactionRepository.transfer(receiver, cryptoCurrencyId, amount, BUY, LocalDateTime.now());
     }
 }

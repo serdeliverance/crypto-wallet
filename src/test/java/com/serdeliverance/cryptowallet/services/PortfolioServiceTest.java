@@ -2,13 +2,12 @@ package com.serdeliverance.cryptowallet.services;
 
 import com.serdeliverance.cryptowallet.domain.Cryptocurrency;
 import com.serdeliverance.cryptowallet.domain.Transaction;
-import com.serdeliverance.cryptowallet.domain.User;
 import com.serdeliverance.cryptowallet.dto.CurrencyQuoteDTO;
 import com.serdeliverance.cryptowallet.dto.CurrencyTotalDTO;
 import com.serdeliverance.cryptowallet.dto.PorfolioDTO;
+import com.serdeliverance.cryptowallet.exceptions.InvalidOperationException;
 import com.serdeliverance.cryptowallet.exceptions.ResourceNotFoundException;
 import com.serdeliverance.cryptowallet.repositories.TransactionRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,19 +15,18 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 import static com.serdeliverance.cryptowallet.domain.OperationType.BUY;
 import static java.util.Arrays.asList;
 import static java.util.Collections.EMPTY_LIST;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class PortfolioServiceSpec {
+public class PortfolioServiceTest {
 
     @Mock
     private UserService userService;
@@ -154,5 +152,35 @@ public class PortfolioServiceSpec {
 
         // then
         assertThrows(ResourceNotFoundException.class, () -> portfolioService.getPortfolio(userId));
+    }
+
+    @Test
+    public void whenUserHasNotEnoughFundsValidateShouldThrowException() {
+        // given
+        when(cryptocurrencyService.getByName("Bitcoin")).thenReturn(new Cryptocurrency(1, "Bitcoin", "BTC"));
+        when(transactionRepository.getByUser(2))
+            .thenReturn(asList(
+                new Transaction(23L, 2, 1, BigDecimal.ONE, BUY, "2021-02-05T19:29:03.239"),
+                new Transaction(26L, 2, 1, BigDecimal.ONE, BUY, "2021-02-06T19:29:03.239"),
+                new Transaction(27L, 2, 1, BigDecimal.ONE, BUY, "2021-02-06T19:29:03.239"))
+            );
+
+        // when/then
+        assertThrows(InvalidOperationException.class, () -> portfolioService.validateTransference(2, "Bitcoin", BigDecimal.valueOf(10)));
+    }
+
+    @Test
+    public void whenUserHasFundsItShouldReturnVoid() {
+        // given
+        when(cryptocurrencyService.getByName("Bitcoin")).thenReturn(new Cryptocurrency(1, "Bitcoin", "BTC"));
+        when(transactionRepository.getByUser(2))
+            .thenReturn(asList(
+                new Transaction(23L, 2, 1, BigDecimal.ONE, BUY, "2021-02-05T19:29:03.239"),
+                new Transaction(26L, 2, 1, BigDecimal.ONE, BUY, "2021-02-06T19:29:03.239"),
+                new Transaction(27L, 2, 1, BigDecimal.ONE, BUY, "2021-02-06T19:29:03.239"))
+            );
+
+        // when/then
+        portfolioService.validateTransference(2, "Bitcoin", BigDecimal.ONE);
     }
 }

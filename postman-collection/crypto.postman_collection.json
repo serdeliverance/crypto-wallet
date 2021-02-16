@@ -189,6 +189,35 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "transfer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"issuer\": 88,\n    \"receiver\": 2,\n    \"cryptocurrency\": \"Huobi Token\",\n    \"amount\": 6000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/transactions/transferences",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transactions",
+						"transferences"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
