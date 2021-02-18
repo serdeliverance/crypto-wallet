@@ -9,7 +9,7 @@ It provides the following functionalities:
 * allow users to see their portfolio balance (the quotation of their cryptocurrencies portfolio converted to USD)
 * allows users to see their transaction history
 
-## A brief note about current version
+## A brief note about the current version
 
 In order to make this project easy for beginners (remember, It was made for teaching) current version implements functionalities mentioned above without taking care of requirements such as full non-blocking, performance improvements through caching, the use of ORM, etc. However, those requirements will be implemented in future releases.
 
