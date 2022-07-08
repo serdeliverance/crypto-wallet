@@ -14,7 +14,6 @@ It provides the following functionalities:
 * Java 11
 * Spring Boot
 * Postgres
-* Kafka
 * Docker
 
 ## Architecture
