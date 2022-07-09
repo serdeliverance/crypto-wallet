@@ -38,11 +38,26 @@ docker-compose up
 
 2. Run the application
 
+You'll need to have configured the following env variables before running the app:
+
+* `DB_URL`
+* `DB_USER`
+* `DB_PASSWORD`
+* `COINMARKETCAP_URL`: [Coinmaerkap](https://coinmarketcap.com/api/) api url
+* `COINMARKETCAP_API_KEY`: you have to generate one API KEY on [Coinmaketcap Web Site](https://coinmarketcap.com/api/)
+
+Then execute:
+
 ```
 mvn spring-boot:run
 ```
 
 It runs the application on http://localhost:8080
+
+
+## Database migrations
+
+We use [Flyway](https://flywaydb.org/) for database migrations. It runs the migration on application startup, so remember to have the dockers up when running the app.
 
 ## API
 
