@@ -54,9 +54,7 @@ public class PortfolioService {
                                         .distinct()
                                         .collect(Collectors.toList()))
                         .stream()
-                        .collect(
-                                Collectors.toMap(
-                                        Cryptocurrency::getId, Cryptocurrency::getName));
+                        .collect(Collectors.toMap(Cryptocurrency::getId, Cryptocurrency::getName));
         List<CurrencyTotalDTO> currencies =
                 transactions.stream()
                         .collect(groupingBy(Transaction::getCryptocurrencyId))

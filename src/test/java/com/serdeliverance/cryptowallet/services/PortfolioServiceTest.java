@@ -1,23 +1,6 @@
 /* (C)2022 */
 package com.serdeliverance.cryptowallet.services;
 
-import com.serdeliverance.cryptowallet.domain.Cryptocurrency;
-import com.serdeliverance.cryptowallet.domain.Transaction;
-import com.serdeliverance.cryptowallet.dto.CurrencyQuoteDTO;
-import com.serdeliverance.cryptowallet.dto.CurrencyTotalDTO;
-import com.serdeliverance.cryptowallet.dto.PorfolioDTO;
-import com.serdeliverance.cryptowallet.exceptions.InvalidOperationException;
-import com.serdeliverance.cryptowallet.exceptions.ResourceNotFoundException;
-import com.serdeliverance.cryptowallet.repositories.TransactionRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.math.BigDecimal;
-import java.util.List;
-
 import static com.serdeliverance.cryptowallet.domain.OperationType.BUY;
 import static java.util.Arrays.asList;
 import static java.util.Collections.EMPTY_LIST;
@@ -26,6 +9,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
+
+import com.serdeliverance.cryptowallet.domain.Cryptocurrency;
+import com.serdeliverance.cryptowallet.domain.Transaction;
+import com.serdeliverance.cryptowallet.dto.CurrencyQuoteDTO;
+import com.serdeliverance.cryptowallet.dto.CurrencyTotalDTO;
+import com.serdeliverance.cryptowallet.dto.PorfolioDTO;
+import com.serdeliverance.cryptowallet.exceptions.InvalidOperationException;
+import com.serdeliverance.cryptowallet.exceptions.ResourceNotFoundException;
+import com.serdeliverance.cryptowallet.repositories.TransactionRepository;
+import java.math.BigDecimal;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 public class PortfolioServiceTest {
