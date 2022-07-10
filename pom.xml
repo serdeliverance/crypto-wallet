@@ -108,6 +108,9 @@
 							<style>AOSP</style>
 							<reflowLongStrings>true</reflowLongStrings>
 						</googleJavaFormat>
+						<excludes>
+							<exclude>e2e/**</exclude>
+						</excludes>
 						<licenseHeader>
 							<content>/* (C)$YEAR */</content>  <!-- or <file>${project.basedir}/license-header</file> -->
 						</licenseHeader>

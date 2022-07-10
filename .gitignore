@@ -31,3 +31,27 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+### Node project ###
+# dependencies
+e2e/node_modules
+e2e/.pnp
+e2e/.pnp.js
+
+# testing
+e2e/coverage
+
+# production
+e2e/build
+
+# misc
+e2e/.DS_Store
+e2e/.env.local
+e2e/.env.development.local
+e2e/.env.test.local
+e2e/.env.production.local
+
+e2e/npm-debug.log*
+e2e/yarn-debug.log*
+yarn-error.log*

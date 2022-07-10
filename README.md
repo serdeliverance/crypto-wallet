@@ -15,6 +15,8 @@ It provides the following functionalities:
 * Spring Boot
 * Postgres
 * Docker
+* Flyway
+* Cypress
 
 ## Architecture
 
@@ -143,19 +145,27 @@ curl -X POST -H "Content-Type: application/json" \
 	http://localhost:8080/transactions/sells
 ```
 
+## E2E
+
+For tests `E2E` [Cypress](https://www.cypress.io/) is used. To run the entire e2e suite execute:
+
+```console
+TODO TODO TODO
+```
+
 ## Formatting & Coding Style
 
 This project uses [Spotless](https://github.com/diffplug/spotless) to enforce a consistent programming style. Under the hood, it is configured to use [Google Java Format](https://github.com/google/google-java-format). We have the following commands:
 
 * check formatting violations:
 
-```
+```console
 mvn spotless:check
 ```
 
 * apply formatting:
 
-```
+```console
 mvn spotless:apply
 ```
 
