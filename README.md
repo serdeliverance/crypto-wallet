@@ -20,13 +20,13 @@ It provides the following functionalities:
 
 The following diagram shows the systems architecture:
 
-![Alt text](diagrams/cw-architecture.png?raw=true "Architecture") 
+![Alt text](diagrams/cw-architecture.png?raw=true "Architecture")
 
 ## Data Model
 
 The following diagram shows the data model:
 
-![Alt text](diagrams/cw-data-model.png?raw=true "Title") 
+![Alt text](diagrams/cw-data-model.png?raw=true "Title")
 
 ## Run the app
 
@@ -83,16 +83,16 @@ curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET
 
 ```
 curl -X POST -H "Content-Type: application/json" \
-    -d '{"username": "pepe", "password": "pass1234", "email": "pepe@gmail.com"}' \
-    http://localhost:8080/users
+	-d '{"username": "pepe", "password": "pass1234", "email": "pepe@gmail.com"}' \
+	http://localhost:8080/users
 ```
 
 * Update user
 
 ```
 curl -X PUT -H "Content-Type: application/json" \
-    -d '{"username": "pepe", "password": "pass1234", "email": "pepe@gmail.com"}' \
-    http://localhost:8080/users/:userId
+	-d '{"username": "pepe", "password": "pass1234", "email": "pepe@gmail.com"}' \
+	http://localhost:8080/users/:userId
 ```
 
 * Delete user
@@ -123,25 +123,43 @@ curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET
 
 ```
 curl -X POST -H "Content-Type: application/json" \
-    -d '{"issuer": "88", "receiver": "2", "cryptocurrency": "Huobi Token", "amount": 10}' \
-    http://localhost:8080/transactions/transferences
+	-d '{"issuer": "88", "receiver": "2", "cryptocurrency": "Huobi Token", "amount": 10}' \
+	http://localhost:8080/transactions/transferences
 ```
 
 * Buy
 
 ```
 curl -X POST -H "Content-Type: application/json" \
-    -d '{"userId": 3, "cryptocurrency": "Bitcoin", "amountInUsd": 100000}' \
-    http://localhost:8080/transactions/buys
+	-d '{"userId": 3, "cryptocurrency": "Bitcoin", "amountInUsd": 100000}' \
+	http://localhost:8080/transactions/buys
 ```
 
 * Sell
 
 ```
 curl -X POST -H "Content-Type: application/json" \
-    -d '{"userId": 3, "cryptocurrency": "Bitcoin", "amount": 1}' \
-    http://localhost:8080/transactions/sells
+	-d '{"userId": 3, "cryptocurrency": "Bitcoin", "amount": 1}' \
+	http://localhost:8080/transactions/sells
 ```
+
+## Formatting & Coding Style
+
+This project uses [Spotless](https://github.com/diffplug/spotless) to enforce a consistent programming style. Under the hood, it is configured to use [Google Java Format](https://github.com/google/google-java-format). We have the following commands:
+
+* check formatting violations:
+
+```
+mvn spotless:check
+```
+
+* apply formatting:
+
+```
+mvn spotless:apply
+```
+
+By default, this plugin is attached to the `verify phase` of maven lifecycle.
 
 ## Extra notes
 

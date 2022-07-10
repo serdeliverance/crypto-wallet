@@ -1,14 +1,14 @@
+/* (C)2022 */
 package com.serdeliverance.cryptowallet.services;
 
 import com.serdeliverance.cryptowallet.domain.User;
 import com.serdeliverance.cryptowallet.exceptions.ResourceNotFoundException;
 import com.serdeliverance.cryptowallet.repositories.UserRepository;
+import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +33,7 @@ public class UserService {
     }
 
     public void update(User user) {
-        Integer userId = user.getId().get();
+        Integer userId = user.getId().get(); // FIXME get() invocation
         if (this.exists(userId)) {
             userRepository.update(user);
         } else throw new ResourceNotFoundException("user: " + userId);

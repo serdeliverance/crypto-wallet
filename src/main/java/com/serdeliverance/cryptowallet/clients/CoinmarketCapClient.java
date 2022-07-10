@@ -1,3 +1,4 @@
+/* (C)2022 */
 package com.serdeliverance.cryptowallet.clients;
 
 import com.serdeliverance.cryptowallet.clients.response.ListingQuotesResponseDTO;
@@ -26,11 +27,17 @@ public class CoinmarketCapClient {
 
     public ListingQuotesResponseDTO quotes() {
         log.info("Getting quotes from coinmarketcap");
-        ResponseEntity<ListingQuotesResponseDTO> response = restTemplate.exchange(url, HttpMethod.GET, createEntityWithHeader(API_KEY_HEADER, apiKey), ListingQuotesResponseDTO.class);
+        ResponseEntity<ListingQuotesResponseDTO> response =
+                restTemplate.exchange(
+                        url,
+                        HttpMethod.GET,
+                        addApiKeyHeader(apiKey),
+                        ListingQuotesResponseDTO.class);
         return handleResponse(response);
     }
 
-    private ListingQuotesResponseDTO handleResponse(ResponseEntity<ListingQuotesResponseDTO> response) {
+    private ListingQuotesResponseDTO handleResponse(
+            ResponseEntity<ListingQuotesResponseDTO> response) {
         if (response.getStatusCode() != HttpStatus.OK) {
             log.error("Coinmarketcap responded with {} status code", response.getStatusCodeValue());
             throw new RemoteApiException("error communicating with coinmarketcap API");
@@ -38,10 +45,9 @@ public class CoinmarketCapClient {
         return response.getBody();
     }
 
-    private HttpEntity<String> createEntityWithHeader(String header, String value) {
+    private HttpEntity<String> addApiKeyHeader(String value) {
         HttpHeaders headers = new HttpHeaders();
-        headers.add(header, value);
-        HttpEntity<String> entity = new HttpEntity<>(null, headers);
-        return entity;
+        headers.add(API_KEY_HEADER, value);
+        return new HttpEntity<>(null, headers);
     }
 }

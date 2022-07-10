@@ -1,23 +1,17 @@
+/* (C)2022 */
 package com.serdeliverance.cryptowallet.converters;
 
 import com.serdeliverance.cryptowallet.domain.User;
 import com.serdeliverance.cryptowallet.dto.CreateUserDTO;
 import com.serdeliverance.cryptowallet.dto.UpdateUserDTO;
 import com.serdeliverance.cryptowallet.dto.UserDTO;
-
 import java.util.Optional;
 
-/**
- * Converter for UserDTO to User and viceversa
- */
+/** Converter for UserDTO to User and viceversa */
 public class UserDTOConverter {
 
     public static UserDTO convertToDTO(User user) {
-        return new UserDTO(
-                user.getId(),
-                user.getUsername(),
-                user.getEmail()
-        );
+        return new UserDTO(user.getId(), user.getUsername(), user.getEmail());
     }
 
     public static User convertToModel(CreateUserDTO createUserDTO) {
@@ -33,7 +27,6 @@ public class UserDTOConverter {
                 Optional.of(id),
                 updateUserDTO.getUsername(),
                 updateUserDTO.getPassword(),
-                updateUserDTO.getEmail()
-        );
+                updateUserDTO.getEmail());
     }
 }

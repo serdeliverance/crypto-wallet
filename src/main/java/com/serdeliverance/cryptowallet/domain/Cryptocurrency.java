@@ -1,3 +1,4 @@
+/* (C)2022 */
 package com.serdeliverance.cryptowallet.domain;
 
 import lombok.AllArgsConstructor;
