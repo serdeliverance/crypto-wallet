@@ -5,7 +5,7 @@ A demo crypto wallet app using with teaching purposes. This app allows clients t
 It provides the following functionalities:
 
 * managing users (CRUD operations, uses for admins)
-* buy, sell and transfer crypto currencies
+* buy, sell and transfer cryptocurrencies
 * allow users to see their portfolio balance (the quotation of their cryptocurrencies portfolio converted to USD)
 * allows users to see their transaction history
 
