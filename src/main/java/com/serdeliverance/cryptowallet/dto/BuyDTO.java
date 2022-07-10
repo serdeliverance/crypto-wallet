@@ -1,11 +1,11 @@
+/* (C)2022 */
 package com.serdeliverance.cryptowallet.dto;
 
+import java.math.BigDecimal;
+import javax.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.validation.constraints.Min;
-import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor

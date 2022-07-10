@@ -1,3 +1,4 @@
+/* (C)2022 */
 package com.serdeliverance.cryptowallet.exceptions;
 
 public class RemoteApiException extends RuntimeException {

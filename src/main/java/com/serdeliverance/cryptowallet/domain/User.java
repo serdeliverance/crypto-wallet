@@ -1,10 +1,10 @@
+/* (C)2022 */
 package com.serdeliverance.cryptowallet.domain;
 
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Optional;
 
 @Data
 @NoArgsConstructor
