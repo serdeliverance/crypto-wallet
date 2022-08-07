@@ -1,6 +1,6 @@
 # crypto-wallet
 
-A demo crypto wallet app using with teaching purposes. This app allows clients to manage their crypto currency portfolio. It uses [Coinmarketcap API](https://coinmarketcap.com/api/) for getting the updated cryptocurrencies quotation.
+A demo crypto wallet app using with teaching purposes. This app allows clients to manage their crypto currency portfolio. It uses [Coinapi API](https://www.coinapi.io/) for getting the updated cryptocurrencies quotation.
 
 It provides the following functionalities:
 
@@ -45,8 +45,8 @@ You'll need to have configured the following env variables before running the ap
 * `DB_URL`
 * `DB_USER`
 * `DB_PASSWORD`
-* `COINMARKETCAP_URL`: [Coinmaerkap](https://coinmarketcap.com/api/) api url
-* `COINMARKETCAP_API_KEY`: you have to generate one API KEY on [Coinmaketcap Web Site](https://coinmarketcap.com/api/)
+* `COINAPI_URL`: [CoinApi](https://docs.coinapi.io/) api url
+* `COINAPI_API_KEY`: you have to generate one API KEY on [CoinApi Web Site](https://www.coinapi.io/)
 
 Then execute:
 

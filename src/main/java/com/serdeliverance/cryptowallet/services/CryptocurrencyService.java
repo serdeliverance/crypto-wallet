@@ -3,7 +3,7 @@ package com.serdeliverance.cryptowallet.services;
 
 import static com.serdeliverance.cryptowallet.converters.CurrencyQuoteDTOConverter.convertFromResponse;
 
-import com.serdeliverance.cryptowallet.clients.CoinmarketCapClient;
+import com.serdeliverance.cryptowallet.clients.CoinApiClient;
 import com.serdeliverance.cryptowallet.domain.Cryptocurrency;
 import com.serdeliverance.cryptowallet.dto.CurrencyQuoteDTO;
 import com.serdeliverance.cryptowallet.exceptions.ResourceNotFoundException;
@@ -18,12 +18,12 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class CryptocurrencyService {
 
-    private final CoinmarketCapClient coinmarketCapClient;
+    private final CoinApiClient coinApiClient;
     private final CryptocurrencyRepository cryptocurrencyRepository;
 
     public List<CurrencyQuoteDTO> quotes() {
         log.info("Getting quotes");
-        return convertFromResponse(coinmarketCapClient.quotes());
+        return convertFromResponse(coinApiClient.quotes());
     }
 
     public List<Cryptocurrency> getByIdList(List<Integer> ids) {

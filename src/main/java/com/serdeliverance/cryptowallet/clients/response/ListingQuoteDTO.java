@@ -1,16 +1,15 @@
 /* (C)2022 */
 package com.serdeliverance.cryptowallet.clients.response;
 
-import java.util.Map;
+import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class ListingElementDTO {
-    private String name;
-    private String symbol;
-    private Map<String, QuoteDTO> quote;
+@AllArgsConstructor
+public class ListingQuoteDTO {
+    private String symbolId;
+    private BigDecimal askPrice;
 }
