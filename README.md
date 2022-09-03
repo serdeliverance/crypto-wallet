@@ -11,7 +11,7 @@ It provides the following functionalities:
 
 ## Tech Stack
 
-* Java 11
+* Java 17
 * Spring Boot
 * Postgres
 * Docker
