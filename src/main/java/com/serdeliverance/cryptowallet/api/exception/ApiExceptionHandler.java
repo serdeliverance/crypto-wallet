@@ -14,23 +14,22 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @Slf4j
 public class ApiExceptionHandler {
 
-    @ExceptionHandler(value = {RuntimeException.class, RemoteApiException.class})
-    public ResponseEntity<String> internalServerError(RuntimeException runtimeException) {
-        log.error("Unexpected error. Error {}", runtimeException.getMessage());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-    }
+  @ExceptionHandler(value = {RuntimeException.class, RemoteApiException.class})
+  public ResponseEntity<String> internalServerError(RuntimeException runtimeException) {
+    log.error("Unexpected error. Error {}", runtimeException.getMessage());
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+  }
 
-    @ExceptionHandler(value = {ResourceNotFoundException.class})
-    public ResponseEntity<String> notFoundError(
-            ResourceNotFoundException resourceNotFoundException) {
-        log.info("Resource not found. {}", resourceNotFoundException.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    }
+  @ExceptionHandler(value = {ResourceNotFoundException.class})
+  public ResponseEntity<String> notFoundError(ResourceNotFoundException resourceNotFoundException) {
+    log.info("Resource not found. {}", resourceNotFoundException.getMessage());
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+  }
 
-    @ExceptionHandler(value = {InvalidOperationException.class})
-    public ResponseEntity<String> invalidOperation(
-            InvalidOperationException invalidOperationException) {
-        log.info("Invalid operation. {}", invalidOperationException.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-    }
+  @ExceptionHandler(value = {InvalidOperationException.class})
+  public ResponseEntity<String> invalidOperation(
+      InvalidOperationException invalidOperationException) {
+    log.info("Invalid operation. {}", invalidOperationException.getMessage());
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+  }
 }

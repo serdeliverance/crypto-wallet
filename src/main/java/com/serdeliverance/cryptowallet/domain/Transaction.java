@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Transaction {
 
-    private Long id;
-    private Integer userId;
-    private Integer cryptocurrencyId;
-    private BigDecimal amount;
-    private OperationType operationType;
-    private String transactionDate;
+  private Long id;
+  private Integer userId;
+  private Integer cryptocurrencyId;
+  private BigDecimal amount;
+  private OperationType operationType;
+  private String transactionDate;
 }

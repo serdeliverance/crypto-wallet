@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class QuoteDTO {
-    private BigDecimal price;
+  private BigDecimal price;
 }

@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class PortfolioController {
 
-    private final PortfolioService portfolioService;
+  private final PortfolioService portfolioService;
 
-    @GetMapping("/{userId}")
-    public PortfolioDTO getPortfolio(@PathVariable("userId") Integer userId) {
-        log.info("Getting crypto portfolio for user: {}", userId);
-        return portfolioService.getPortfolio(userId);
-    }
+  @GetMapping("/{userId}")
+  public PortfolioDTO getPortfolio(@PathVariable("userId") Integer userId) {
+    log.info("Getting crypto portfolio for user: {}", userId);
+    return portfolioService.getPortfolio(userId);
+  }
 }

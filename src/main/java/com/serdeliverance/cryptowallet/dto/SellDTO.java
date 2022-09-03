@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SellDTO {
-    private Integer userId;
-    private String cryptocurrency;
-    private BigDecimal amount;
+  private Integer userId;
+  private String cryptocurrency;
+  private BigDecimal amount;
 }

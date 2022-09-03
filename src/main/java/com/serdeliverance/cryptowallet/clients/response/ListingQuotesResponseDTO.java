@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ListingQuotesResponseDTO {
-    private List<ListingElementDTO> data;
+  private List<ListingElementDTO> data;
 }

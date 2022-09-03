@@ -14,12 +14,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PortfolioDTO {
 
-    private Integer userId;
-    private List<CurrencyTotalDTO> currencies;
-    private BigDecimal totalInUSD;
-    private LocalDateTime date;
+  private Integer userId;
+  private List<CurrencyTotalDTO> currencies;
+  private BigDecimal totalInUSD;
+  private LocalDateTime date;
 
-    public static PortfolioDTO emptyPortfolio(Integer userId, LocalDateTime date) {
-        return new PortfolioDTO(userId, Collections.emptyList(), BigDecimal.ZERO, date);
-    }
+  public static PortfolioDTO emptyPortfolio(Integer userId, LocalDateTime date) {
+    return new PortfolioDTO(userId, Collections.emptyList(), BigDecimal.ZERO, date);
+  }
 }

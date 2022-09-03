@@ -22,42 +22,42 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class UserController {
 
-    private final UserService userService;
+  private final UserService userService;
 
-    @GetMapping("/{id}")
-    public UserDTO get(@PathVariable("id") Integer id) {
-        log.info("Getting user with id: {}", id);
-        return userService
-                .get(id)
-                .map(UserDTOConverter::convertToDTO)
-                .orElseThrow(() -> new ResourceNotFoundException("user:" + id));
-    }
+  @GetMapping("/{id}")
+  public UserDTO get(@PathVariable("id") Integer id) {
+    log.info("Getting user with id: {}", id);
+    return userService
+        .get(id)
+        .map(UserDTOConverter::convertToDTO)
+        .orElseThrow(() -> new ResourceNotFoundException("user:" + id));
+  }
 
-    @GetMapping
-    public List<UserDTO> getAll() {
-        log.info("Getting all users");
-        return userService.getAll().stream()
-                .map(UserDTOConverter::convertToDTO)
-                .collect(Collectors.toList());
-    }
+  @GetMapping
+  public List<UserDTO> getAll() {
+    log.info("Getting all users");
+    return userService.getAll().stream()
+        .map(UserDTOConverter::convertToDTO)
+        .collect(Collectors.toList());
+  }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody CreateUserDTO user) {
-        log.info("creating user...");
-        userService.create(convertToModel(user));
-    }
+  @PostMapping
+  @ResponseStatus(HttpStatus.CREATED)
+  public void create(@RequestBody CreateUserDTO user) {
+    log.info("creating user...");
+    userService.create(convertToModel(user));
+  }
 
-    @PutMapping("/{id}")
-    public void update(@PathVariable("id") Integer id, @RequestBody UpdateUserDTO updateUser) {
-        log.info("updating user: {}", id);
-        userService.update(convertToModel(id, updateUser));
-    }
+  @PutMapping("/{id}")
+  public void update(@PathVariable("id") Integer id, @RequestBody UpdateUserDTO updateUser) {
+    log.info("updating user: {}", id);
+    userService.update(convertToModel(id, updateUser));
+  }
 
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable("id") Integer id) {
-        log.info("deleting user with userId: {}", id);
-        userService.delete(id);
-    }
+  @DeleteMapping("/{id}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void delete(@PathVariable("id") Integer id) {
+    log.info("deleting user with userId: {}", id);
+    userService.delete(id);
+  }
 }

@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class User {
 
-    private Optional<Integer> id;
-    private String username;
-    private String password;
-    private String email;
+  private Optional<Integer> id;
+  private String username;
+  private String password;
+  private String email;
 }

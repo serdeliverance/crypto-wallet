@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class CryptocurrencyController {
 
-    private final CryptocurrencyService cryptocurrencyService;
+  private final CryptocurrencyService cryptocurrencyService;
 
-    @GetMapping("/quotes")
-    public List<CurrencyQuoteDTO> quotes() {
-        log.info("Getting quotes");
-        return cryptocurrencyService.quotes();
-    }
+  @GetMapping("/quotes")
+  public List<CurrencyQuoteDTO> quotes() {
+    log.info("Getting quotes");
+    return cryptocurrencyService.quotes();
+  }
 }
