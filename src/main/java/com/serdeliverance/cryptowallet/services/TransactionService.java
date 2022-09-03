@@ -23,89 +23,81 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class TransactionService {
 
-    private final TransactionRepository transactionRepository;
-    private final CryptocurrencyService cryptocurrencyService;
-    private final UserService userService;
-    private final PortfolioService portfolioService;
+  private final TransactionRepository transactionRepository;
+  private final CryptocurrencyService cryptocurrencyService;
+  private final UserService userService;
+  private final PortfolioService portfolioService;
 
-    public List<TransactionDTO> getHistory(Integer userId) {
-        log.info("Getting transaction history for userId: {}", userId);
-        userService.validateUser(userId);
-        List<Transaction> transactions = transactionRepository.getByUser(userId);
-        return transactions.isEmpty() ? List.of() : buildHistory(transactions);
-    }
+  public List<TransactionDTO> getHistory(Integer userId) {
+    log.info("Getting transaction history for userId: {}", userId);
+    userService.validateUser(userId);
+    List<Transaction> transactions = transactionRepository.getByUser(userId);
+    return transactions.isEmpty() ? List.of() : buildHistory(transactions);
+  }
 
-    private List<TransactionDTO> buildHistory(List<Transaction> transactions) {
-        Map<Integer, String> cryptoMap =
-                cryptocurrencyService
-                        .getByIdList(
-                                transactions.stream()
-                                        .map(Transaction::getCryptocurrencyId)
-                                        .distinct()
-                                        .collect(toList()))
-                        .stream()
-                        .collect(toMap(Cryptocurrency::getId, Cryptocurrency::getName));
+  private List<TransactionDTO> buildHistory(List<Transaction> transactions) {
+    Map<Integer, String> cryptoMap =
+        cryptocurrencyService
+            .getByIdList(
+                transactions.stream()
+                    .map(Transaction::getCryptocurrencyId)
+                    .distinct()
+                    .collect(toList()))
+            .stream()
+            .collect(toMap(Cryptocurrency::getId, Cryptocurrency::getName));
 
-        return transactions.stream()
-                .map(
-                        tx ->
-                                new TransactionDTO(
-                                        tx.getId(),
-                                        cryptoMap.get(tx.getCryptocurrencyId()),
-                                        tx.getAmount(),
-                                        tx.getOperationType().name(),
-                                        tx.getTransactionDate()))
-                .collect(toList());
-    }
+    return transactions.stream()
+        .map(
+            tx ->
+                new TransactionDTO(
+                    tx.getId(),
+                    cryptoMap.get(tx.getCryptocurrencyId()),
+                    tx.getAmount(),
+                    tx.getOperationType().name(),
+                    tx.getTransactionDate()))
+        .collect(toList());
+  }
 
-    public void transfer(
-            Integer issuer, Integer receiver, String cryptocurrency, BigDecimal amount) {
-        log.info(
-                "Transferring {} {} from user: {} to user: {}",
-                amount,
-                cryptocurrency,
-                issuer,
-                receiver);
-        userService.validateUser(issuer);
-        userService.validateUser(receiver);
-        portfolioService.validateFunds(issuer, cryptocurrency, amount);
-        Integer cryptoCurrencyId = cryptocurrencyService.getByName(cryptocurrency).getId();
-        transactionRepository.saveTransaction(
-                issuer,
-                cryptoCurrencyId,
-                amount.multiply(BigDecimal.valueOf(-1)),
-                TRANSFERENCE,
-                LocalDateTime.now());
-        transactionRepository.saveTransaction(
-                receiver, cryptoCurrencyId, amount, BUY, LocalDateTime.now());
-    }
+  public void transfer(Integer issuer, Integer receiver, String cryptocurrency, BigDecimal amount) {
+    log.info(
+        "Transferring {} {} from user: {} to user: {}", amount, cryptocurrency, issuer, receiver);
+    userService.validateUser(issuer);
+    userService.validateUser(receiver);
+    portfolioService.validateFunds(issuer, cryptocurrency, amount);
+    Integer cryptoCurrencyId = cryptocurrencyService.getByName(cryptocurrency).getId();
+    transactionRepository.saveTransaction(
+        issuer,
+        cryptoCurrencyId,
+        amount.multiply(BigDecimal.valueOf(-1)),
+        TRANSFERENCE,
+        LocalDateTime.now());
+    transactionRepository.saveTransaction(
+        receiver, cryptoCurrencyId, amount, BUY, LocalDateTime.now());
+  }
 
-    public void buy(Integer userId, String cryptocurrency, BigDecimal amountInUsd) {
-        log.info(
-                "Buying {} for an amount of {} dollars by user: {}",
-                cryptocurrency,
-                amountInUsd,
-                userId);
-        userService.validateUser(userId);
-        Integer cryptoCurrencyId = cryptocurrencyService.getByName(cryptocurrency).getId();
-        BigDecimal quote = cryptocurrencyService.getQuote(cryptocurrency).getQuoteInUsd();
-        transactionRepository.saveTransaction(
-                userId,
-                cryptoCurrencyId,
-                amountInUsd.divide(quote, 10, RoundingMode.CEILING),
-                BUY,
-                LocalDateTime.now());
-    }
+  public void buy(Integer userId, String cryptocurrency, BigDecimal amountInUsd) {
+    log.info(
+        "Buying {} for an amount of {} dollars by user: {}", cryptocurrency, amountInUsd, userId);
+    userService.validateUser(userId);
+    Integer cryptoCurrencyId = cryptocurrencyService.getByName(cryptocurrency).getId();
+    BigDecimal quote = cryptocurrencyService.getQuote(cryptocurrency).getQuoteInUsd();
+    transactionRepository.saveTransaction(
+        userId,
+        cryptoCurrencyId,
+        amountInUsd.divide(quote, 10, RoundingMode.CEILING),
+        BUY,
+        LocalDateTime.now());
+  }
 
-    public void sell(Integer userId, String cryptocurrency, BigDecimal amount) {
-        log.info("Selling {} {} by user: {}", amount, cryptocurrency, userId);
-        userService.validateUser(userId);
-        portfolioService.validateFunds(userId, cryptocurrency, amount);
-        transactionRepository.saveTransaction(
-                userId,
-                cryptocurrencyService.getByName(cryptocurrency).getId(),
-                amount.multiply(BigDecimal.valueOf(-1)),
-                SELL,
-                LocalDateTime.now());
-    }
+  public void sell(Integer userId, String cryptocurrency, BigDecimal amount) {
+    log.info("Selling {} {} by user: {}", amount, cryptocurrency, userId);
+    userService.validateUser(userId);
+    portfolioService.validateFunds(userId, cryptocurrency, amount);
+    transactionRepository.saveTransaction(
+        userId,
+        cryptocurrencyService.getByName(cryptocurrency).getId(),
+        amount.multiply(BigDecimal.valueOf(-1)),
+        SELL,
+        LocalDateTime.now());
+  }
 }

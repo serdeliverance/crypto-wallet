@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ListingElementDTO {
-    private String name;
-    private String symbol;
-    private Map<String, QuoteDTO> quote;
+  private String name;
+  private String symbol;
+  private Map<String, QuoteDTO> quote;
 }

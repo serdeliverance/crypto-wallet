@@ -8,15 +8,13 @@ import java.util.stream.Collectors;
 
 public class CurrencyQuoteDTOConverter {
 
-    private static final String USD_CURRENCY = "USD";
+  private static final String USD_CURRENCY = "USD";
 
-    public static List<CurrencyQuoteDTO> convertFromResponse(ListingQuotesResponseDTO response) {
-        return response.getData().stream()
-                .map(
-                        elem ->
-                                new CurrencyQuoteDTO(
-                                        elem.getName(),
-                                        elem.getQuote().get(USD_CURRENCY).getPrice()))
-                .collect(Collectors.toList());
-    }
+  public static List<CurrencyQuoteDTO> convertFromResponse(ListingQuotesResponseDTO response) {
+    return response.getData().stream()
+        .map(
+            elem ->
+                new CurrencyQuoteDTO(elem.getName(), elem.getQuote().get(USD_CURRENCY).getPrice()))
+        .collect(Collectors.toList());
+  }
 }

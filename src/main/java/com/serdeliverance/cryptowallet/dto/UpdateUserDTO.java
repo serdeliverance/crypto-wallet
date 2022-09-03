@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateUserDTO {
-    private Optional<Integer> id;
-    private String username;
-    private String password;
-    private String email;
+  private Optional<Integer> id;
+  private String username;
+  private String password;
+  private String email;
 }

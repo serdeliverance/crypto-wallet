@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TransactionDTO {
-    private Long id;
-    private String cryptocurrency;
-    private BigDecimal amount;
-    private String operationType;
-    private String date;
+  private Long id;
+  private String cryptocurrency;
+  private BigDecimal amount;
+  private String operationType;
+  private String date;
 }

@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Portfolio {
-    private User user;
-    private List<CurrencyTotal> currencies;
-    private BigDecimal totalInUSD;
-    private LocalDateTime date;
+  private User user;
+  private List<CurrencyTotal> currencies;
+  private BigDecimal totalInUSD;
+  private LocalDateTime date;
 }

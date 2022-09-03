@@ -18,26 +18,23 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class CryptocurrencyRepository {
 
-    private final JdbcTemplate jdbcTemplate;
-    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+  private final JdbcTemplate jdbcTemplate;
+  private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    private final RowMapper<Cryptocurrency> mapper =
-            (rs, rowNum) ->
-                    new Cryptocurrency(
-                            rs.getInt("id"), rs.getString("name"), rs.getString("symbol"));
+  private final RowMapper<Cryptocurrency> mapper =
+      (rs, rowNum) ->
+          new Cryptocurrency(rs.getInt("id"), rs.getString("name"), rs.getString("symbol"));
 
-    public List<Cryptocurrency> getByIdList(List<Integer> ids) {
-        SqlParameterSource parameters = new MapSqlParameterSource("ids", ids);
-        return namedParameterJdbcTemplate.query(
-                "SELECT ID, NAME, SYMBOL FROM CRYPTOCURRENCY WHERE ID IN (:ids)",
-                parameters,
-                mapper);
-    }
+  public List<Cryptocurrency> getByIdList(List<Integer> ids) {
+    SqlParameterSource parameters = new MapSqlParameterSource("ids", ids);
+    return namedParameterJdbcTemplate.query(
+        "SELECT ID, NAME, SYMBOL FROM CRYPTOCURRENCY WHERE ID IN (:ids)", parameters, mapper);
+  }
 
-    public Optional<Cryptocurrency> getByName(String name) {
-        return jdbcTemplate
-                .query("SELECT ID, NAME, SYMBOL FROM CRYPTOCURRENCY WHERE NAME = ?", mapper, name)
-                .stream()
-                .findFirst();
-    }
+  public Optional<Cryptocurrency> getByName(String name) {
+    return jdbcTemplate
+        .query("SELECT ID, NAME, SYMBOL FROM CRYPTOCURRENCY WHERE NAME = ?", mapper, name)
+        .stream()
+        .findFirst();
+  }
 }

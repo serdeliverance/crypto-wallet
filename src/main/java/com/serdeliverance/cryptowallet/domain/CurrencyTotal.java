@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CurrencyTotal {
-    private Cryptocurrency cryptocurrency;
-    private Integer amount;
+  private Cryptocurrency cryptocurrency;
+  private Integer amount;
 }

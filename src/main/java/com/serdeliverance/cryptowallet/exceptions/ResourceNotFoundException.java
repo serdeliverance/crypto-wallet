@@ -3,7 +3,7 @@ package com.serdeliverance.cryptowallet.exceptions;
 
 public class ResourceNotFoundException extends RuntimeException {
 
-    public ResourceNotFoundException(String message) {
-        super(message);
-    }
+  public ResourceNotFoundException(String message) {
+    super(message);
+  }
 }

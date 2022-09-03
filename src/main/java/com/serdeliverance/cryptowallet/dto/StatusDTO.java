@@ -8,11 +8,11 @@ import lombok.Data;
 @AllArgsConstructor
 public class StatusDTO {
 
-    private static final String OK_MSG = "ok";
+  private static final String OK_MSG = "ok";
 
-    private String status;
+  private String status;
 
-    public static StatusDTO ok() {
-        return new StatusDTO(OK_MSG);
-    }
+  public static StatusDTO ok() {
+    return new StatusDTO(OK_MSG);
+  }
 }

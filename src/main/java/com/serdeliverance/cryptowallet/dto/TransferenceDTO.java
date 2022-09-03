@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TransferenceDTO {
-    private Integer issuer;
-    private Integer receiver;
-    private String cryptocurrency;
-    private BigDecimal amount;
+  private Integer issuer;
+  private Integer receiver;
+  private String cryptocurrency;
+  private BigDecimal amount;
 }

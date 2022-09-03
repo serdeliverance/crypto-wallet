@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CurrencyQuoteDTO {
-    private String crypto;
-    private BigDecimal quoteInUsd;
+  private String crypto;
+  private BigDecimal quoteInUsd;
 }

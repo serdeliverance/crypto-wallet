@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BuyDTO {
 
-    private Integer userId;
-    private String cryptocurrency;
+  private Integer userId;
+  private String cryptocurrency;
 
-    @Min(value = 1, message = "Amount in usd must be valid")
-    private BigDecimal amountInUsd;
+  @Min(value = 1, message = "Amount in usd must be valid")
+  private BigDecimal amountInUsd;
 }
