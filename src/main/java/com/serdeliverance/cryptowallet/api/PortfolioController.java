@@ -1,7 +1,7 @@
 /* (C)2022 */
 package com.serdeliverance.cryptowallet.api;
 
-import com.serdeliverance.cryptowallet.dto.PorfolioDTO;
+import com.serdeliverance.cryptowallet.dto.PortfolioDTO;
 import com.serdeliverance.cryptowallet.services.PortfolioService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ public class PortfolioController {
     private final PortfolioService portfolioService;
 
     @GetMapping("/{userId}")
-    public PorfolioDTO getPortfolio(@PathVariable("userId") Integer userId) {
+    public PortfolioDTO getPortfolio(@PathVariable("userId") Integer userId) {
         log.info("Getting crypto portfolio for user: {}", userId);
         return portfolioService.getPortfolio(userId);
     }

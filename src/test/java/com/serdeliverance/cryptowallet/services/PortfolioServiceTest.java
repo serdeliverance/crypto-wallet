@@ -14,7 +14,7 @@ import com.serdeliverance.cryptowallet.domain.Cryptocurrency;
 import com.serdeliverance.cryptowallet.domain.Transaction;
 import com.serdeliverance.cryptowallet.dto.CurrencyQuoteDTO;
 import com.serdeliverance.cryptowallet.dto.CurrencyTotalDTO;
-import com.serdeliverance.cryptowallet.dto.PorfolioDTO;
+import com.serdeliverance.cryptowallet.dto.PortfolioDTO;
 import com.serdeliverance.cryptowallet.exceptions.InvalidOperationException;
 import com.serdeliverance.cryptowallet.exceptions.ResourceNotFoundException;
 import com.serdeliverance.cryptowallet.repositories.TransactionRepository;
@@ -51,7 +51,7 @@ public class PortfolioServiceTest {
         when(transactionRepository.getByUser(userId)).thenReturn(List.of());
 
         // when
-        PorfolioDTO result = portfolioService.getPortfolio(userId);
+        PortfolioDTO result = portfolioService.getPortfolio(userId);
 
         // then
         assertThat(result).isNotNull();
@@ -96,7 +96,7 @@ public class PortfolioServiceTest {
                 .thenReturn(singletonList(new Cryptocurrency(1, "Bitcoin", "BTC")));
 
         // when
-        PorfolioDTO result = portfolioService.getPortfolio(userId);
+        PortfolioDTO result = portfolioService.getPortfolio(userId);
 
         // then
         BigDecimal expectedTotalInUsd =
@@ -162,7 +162,7 @@ public class PortfolioServiceTest {
                                 new Cryptocurrency(3, "Tether", "TET")));
 
         // when
-        PorfolioDTO result = portfolioService.getPortfolio(userId);
+        PortfolioDTO result = portfolioService.getPortfolio(userId);
 
         CurrencyTotalDTO resultBitcoinTotal =
                 result.getCurrencies().stream()
