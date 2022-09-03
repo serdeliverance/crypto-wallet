@@ -37,7 +37,6 @@ spotless {
             exclude("src/jooq")
         })
         removeUnusedImports()
-        // apply a specific flavor of google-java-format
         googleJavaFormat("1.15.0")
     }
 }
