@@ -1,14 +1,14 @@
 /* (C)2022 */
 package com.serdeliverance.cryptowallet.services;
 
-import static com.serdeliverance.cryptowallet.dto.PorfolioDTO.emptyPortfolio;
+import static com.serdeliverance.cryptowallet.dto.PortfolioDTO.emptyPortfolio;
 import static java.util.stream.Collectors.groupingBy;
 
 import com.serdeliverance.cryptowallet.domain.Cryptocurrency;
 import com.serdeliverance.cryptowallet.domain.Transaction;
 import com.serdeliverance.cryptowallet.dto.CurrencyQuoteDTO;
 import com.serdeliverance.cryptowallet.dto.CurrencyTotalDTO;
-import com.serdeliverance.cryptowallet.dto.PorfolioDTO;
+import com.serdeliverance.cryptowallet.dto.PortfolioDTO;
 import com.serdeliverance.cryptowallet.exceptions.InvalidOperationException;
 import com.serdeliverance.cryptowallet.repositories.TransactionRepository;
 import java.math.BigDecimal;
@@ -29,7 +29,7 @@ public class PortfolioService {
     private final CryptocurrencyService cryptocurrencyService;
     private final TransactionRepository transactionRepository;
 
-    public PorfolioDTO getPortfolio(Integer userId) {
+    public PortfolioDTO getPortfolio(Integer userId) {
         log.info("Getting portfolio for userId: {}", userId);
         userService.validateUser(userId);
         List<Transaction> transactions = transactionRepository.getByUser(userId);
@@ -38,7 +38,7 @@ public class PortfolioService {
                 : emptyPortfolio(userId, LocalDateTime.now());
     }
 
-    private PorfolioDTO buildPorfolio(Integer userId, List<Transaction> transactions) {
+    private PortfolioDTO buildPorfolio(Integer userId, List<Transaction> transactions) {
         log.debug("Building crypto portfolio");
         Map<String, BigDecimal> quotesInUSD =
                 cryptocurrencyService.quotes().stream()
@@ -75,7 +75,7 @@ public class PortfolioService {
                                         crypto.getAmount()
                                                 .multiply(quotesInUSD.get(crypto.getCurrency())))
                         .reduce(BigDecimal.ZERO, BigDecimal::add);
-        return new PorfolioDTO(userId, currencies, totalInUSD, LocalDateTime.now());
+        return new PortfolioDTO(userId, currencies, totalInUSD, LocalDateTime.now());
     }
 
     public void validateFunds(Integer userId, String cryptocurrency, BigDecimal amount) {
