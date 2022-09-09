@@ -2,7 +2,6 @@
 package com.serdeliverance.cryptowallet.services;
 
 import static com.serdeliverance.cryptowallet.domain.OperationType.*;
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
 import com.serdeliverance.cryptowallet.domain.Cryptocurrency;
@@ -13,7 +12,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,18 +29,15 @@ public class TransactionService {
   public List<TransactionDTO> getHistory(Integer userId) {
     log.info("Getting transaction history for userId: {}", userId);
     userService.validateUser(userId);
-    List<Transaction> transactions = transactionRepository.getByUser(userId);
+    var transactions = transactionRepository.getByUser(userId);
     return transactions.isEmpty() ? List.of() : buildHistory(transactions);
   }
 
   private List<TransactionDTO> buildHistory(List<Transaction> transactions) {
-    Map<Integer, String> cryptoMap =
+    var cryptoMap =
         cryptocurrencyService
             .getByIdList(
-                transactions.stream()
-                    .map(Transaction::getCryptocurrencyId)
-                    .distinct()
-                    .collect(toList()))
+                transactions.stream().map(Transaction::getCryptocurrencyId).distinct().toList())
             .stream()
             .collect(toMap(Cryptocurrency::getId, Cryptocurrency::getName));
 
@@ -55,7 +50,7 @@ public class TransactionService {
                     tx.getAmount(),
                     tx.getOperationType().name(),
                     tx.getTransactionDate()))
-        .collect(toList());
+        .toList();
   }
 
   public void transfer(Integer issuer, Integer receiver, String cryptocurrency, BigDecimal amount) {

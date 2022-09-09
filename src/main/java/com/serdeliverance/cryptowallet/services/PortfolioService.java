@@ -14,7 +14,6 @@ import com.serdeliverance.cryptowallet.repositories.TransactionRepository;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +31,7 @@ public class PortfolioService {
   public PortfolioDTO getPortfolio(Integer userId) {
     log.info("Getting portfolio for userId: {}", userId);
     userService.validateUser(userId);
-    List<Transaction> transactions = transactionRepository.getByUser(userId);
+    var transactions = transactionRepository.getByUser(userId);
     return !transactions.isEmpty()
         ? buildPorfolio(userId, transactions)
         : emptyPortfolio(userId, LocalDateTime.now());
@@ -40,20 +39,17 @@ public class PortfolioService {
 
   private PortfolioDTO buildPorfolio(Integer userId, List<Transaction> transactions) {
     log.debug("Building crypto portfolio");
-    Map<String, BigDecimal> quotesInUSD =
+    var quotesInUSD =
         cryptocurrencyService.quotes().stream()
             .collect(
                 Collectors.toMap(CurrencyQuoteDTO::getCrypto, CurrencyQuoteDTO::getQuoteInUsd));
-    Map<Integer, String> cryptoMap =
+    var cryptoMap =
         cryptocurrencyService
             .getByIdList(
-                transactions.stream()
-                    .map(Transaction::getCryptocurrencyId)
-                    .distinct()
-                    .collect(Collectors.toList()))
+                transactions.stream().map(Transaction::getCryptocurrencyId).distinct().toList())
             .stream()
             .collect(Collectors.toMap(Cryptocurrency::getId, Cryptocurrency::getName));
-    List<CurrencyTotalDTO> currencies =
+    var currencies =
         transactions.stream()
             .collect(groupingBy(Transaction::getCryptocurrencyId))
             .entrySet()
@@ -65,8 +61,8 @@ public class PortfolioService {
                         entry.getValue().stream()
                             .map(Transaction::getAmount)
                             .reduce(BigDecimal.ZERO, BigDecimal::add)))
-            .collect(Collectors.toList());
-    BigDecimal totalInUSD =
+            .toList();
+    var totalInUSD =
         currencies.stream()
             .map(crypto -> crypto.getAmount().multiply(quotesInUSD.get(crypto.getCurrency())))
             .reduce(BigDecimal.ZERO, BigDecimal::add);
@@ -80,7 +76,7 @@ public class PortfolioService {
         userId,
         cryptocurrency,
         amount);
-    BigDecimal currencyTotal =
+    var currencyTotal =
         transactionRepository.getByUser(userId).stream()
             .filter(
                 tx ->

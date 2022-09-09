@@ -10,7 +10,6 @@ import com.serdeliverance.cryptowallet.dto.UserDTO;
 import com.serdeliverance.cryptowallet.exceptions.ResourceNotFoundException;
 import com.serdeliverance.cryptowallet.services.UserService;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -36,9 +35,7 @@ public class UserController {
   @GetMapping
   public List<UserDTO> getAll() {
     log.info("Getting all users");
-    return userService.getAll().stream()
-        .map(UserDTOConverter::convertToDTO)
-        .collect(Collectors.toList());
+    return userService.getAll().stream().map(UserDTOConverter::convertToDTO).toList();
   }
 
   @PostMapping
