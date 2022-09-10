@@ -17,16 +17,13 @@ public class UserDTOConverter {
   public static User convertToModel(CreateUserDTO createUserDTO) {
     return new User(
         Optional.empty(),
-        createUserDTO.getUsername(),
-        createUserDTO.getPassword(),
-        createUserDTO.getEmail());
+        createUserDTO.username(),
+        createUserDTO.password(),
+        createUserDTO.email());
   }
 
   public static User convertToModel(Integer id, UpdateUserDTO updateUserDTO) {
     return new User(
-        Optional.of(id),
-        updateUserDTO.getUsername(),
-        updateUserDTO.getPassword(),
-        updateUserDTO.getEmail());
+        Optional.of(id), updateUserDTO.username(), updateUserDTO.password(), updateUserDTO.email());
   }
 }

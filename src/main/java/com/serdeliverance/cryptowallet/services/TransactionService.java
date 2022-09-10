@@ -75,7 +75,7 @@ public class TransactionService {
         "Buying {} for an amount of {} dollars by user: {}", cryptocurrency, amountInUsd, userId);
     userService.validateUser(userId);
     Integer cryptoCurrencyId = cryptocurrencyService.getByName(cryptocurrency).getId();
-    BigDecimal quote = cryptocurrencyService.getQuote(cryptocurrency).getQuoteInUsd();
+    BigDecimal quote = cryptocurrencyService.getQuote(cryptocurrency).quoteInUsd();
     transactionRepository.saveTransaction(
         userId,
         cryptoCurrencyId,

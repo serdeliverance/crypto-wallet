@@ -2,16 +2,5 @@
 package com.serdeliverance.cryptowallet.dto;
 
 import java.util.Optional;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class UpdateUserDTO {
-  private Optional<Integer> id;
-  private String username;
-  private String password;
-  private String email;
-}
+public record UpdateUserDTO(Optional<Integer> id, String username, String password, String email) {}

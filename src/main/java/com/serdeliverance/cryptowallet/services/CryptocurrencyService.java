@@ -43,7 +43,7 @@ public class CryptocurrencyService {
 
   public CurrencyQuoteDTO getQuote(String cryptocurrency) {
     return quotes().stream()
-        .filter(crypto -> crypto.getCrypto().equals(cryptocurrency))
+        .filter(crypto -> crypto.crypto().equals(cryptocurrency))
         .findFirst()
         .orElseThrow(
             () ->

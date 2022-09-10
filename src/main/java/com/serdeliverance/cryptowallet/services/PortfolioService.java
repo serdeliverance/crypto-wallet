@@ -41,8 +41,7 @@ public class PortfolioService {
     log.debug("Building crypto portfolio");
     var quotesInUSD =
         cryptocurrencyService.quotes().stream()
-            .collect(
-                Collectors.toMap(CurrencyQuoteDTO::getCrypto, CurrencyQuoteDTO::getQuoteInUsd));
+            .collect(Collectors.toMap(CurrencyQuoteDTO::crypto, CurrencyQuoteDTO::quoteInUsd));
     var cryptoMap =
         cryptocurrencyService
             .getByIdList(
@@ -64,7 +63,7 @@ public class PortfolioService {
             .toList();
     var totalInUSD =
         currencies.stream()
-            .map(crypto -> crypto.getAmount().multiply(quotesInUSD.get(crypto.getCurrency())))
+            .map(crypto -> crypto.amount().multiply(quotesInUSD.get(crypto.currency())))
             .reduce(BigDecimal.ZERO, BigDecimal::add);
     return new PortfolioDTO(userId, currencies, totalInUSD, LocalDateTime.now());
   }
