@@ -11,7 +11,6 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 import com.serdeliverance.cryptowallet.domain.Cryptocurrency;
-import com.serdeliverance.cryptowallet.domain.OperationType;
 import com.serdeliverance.cryptowallet.domain.Transaction;
 import com.serdeliverance.cryptowallet.dto.CurrencyQuoteDTO;
 import com.serdeliverance.cryptowallet.dto.CurrencyTotalDTO;
@@ -68,7 +67,8 @@ public class PortfolioServiceTest {
     when(transactionRepository.getByUser(userId))
         .thenReturn(
             asList(
-                new Transaction(23L, 1, 1, BigDecimal.valueOf(2), DEPOSIT, "2021-02-05T19:29:03.239"),
+                new Transaction(
+                    23L, 1, 1, BigDecimal.valueOf(2), DEPOSIT, "2021-02-05T19:29:03.239"),
                 new Transaction(26L, 1, 1, BigDecimal.ONE, DEPOSIT, "2021-02-06T19:29:03.239")));
     when(cryptocurrencyService.quotes())
         .thenReturn(
@@ -106,10 +106,12 @@ public class PortfolioServiceTest {
     when(transactionRepository.getByUser(userId))
         .thenReturn(
             asList(
-                new Transaction(23L, 1, 1, BigDecimal.valueOf(2), DEPOSIT, "2021-02-05T19:29:03.239"),
+                new Transaction(
+                    23L, 1, 1, BigDecimal.valueOf(2), DEPOSIT, "2021-02-05T19:29:03.239"),
                 new Transaction(26L, 1, 1, BigDecimal.ONE, DEPOSIT, "2021-02-06T19:29:03.239"),
                 new Transaction(27L, 1, 2, BigDecimal.ONE, DEPOSIT, "2021-02-06T19:29:03.239"),
-                new Transaction(34L, 1, 3, BigDecimal.valueOf(2), DEPOSIT, "2021-02-06T19:29:03.239"),
+                new Transaction(
+                    34L, 1, 3, BigDecimal.valueOf(2), DEPOSIT, "2021-02-06T19:29:03.239"),
                 new Transaction(78L, 1, 2, BigDecimal.ONE, DEPOSIT, "2021-02-06T19:29:03.239")));
     when(cryptocurrencyService.quotes())
         .thenReturn(

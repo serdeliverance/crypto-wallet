@@ -49,7 +49,7 @@ You'll need to have configured the following env variables before running the ap
 Then execute:
 
 ```
-mvn spring-boot:run
+./gradlew bootRun
 ```
 
 It runs the application on http://localhost:8080
@@ -150,13 +150,13 @@ This project uses [Spotless](https://github.com/diffplug/spotless) to enforce a 
 * check formatting violations:
 
 ```
-mvn spotless:check
+./gradlew spotlessCheck
 ```
 
 * apply formatting:
 
 ```
-mvn spotless:apply
+./gradlew spotlessApply
 ```
 
 By default, this plugin is attached to the `verify phase` of maven lifecycle.

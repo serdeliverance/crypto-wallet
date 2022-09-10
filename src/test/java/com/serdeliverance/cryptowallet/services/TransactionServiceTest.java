@@ -15,7 +15,6 @@ import com.serdeliverance.cryptowallet.exceptions.ResourceNotFoundException;
 import com.serdeliverance.cryptowallet.repositories.TransactionRepository;
 import java.math.BigDecimal;
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -33,8 +32,7 @@ public class TransactionServiceTest {
 
   @Mock private PortfolioService portfolioService;
 
-  @InjectMocks
-  private TransactionService transactionService;
+  @InjectMocks private TransactionService transactionService;
 
   @Test
   public void whenUserNotExistsItShouldThrowResourceNotFoundException() {
@@ -69,9 +67,12 @@ public class TransactionServiceTest {
     when(transactionRepository.getByUser(userId))
         .thenReturn(
             asList(
-                new Transaction(12L, 1, 1, BigDecimal.valueOf(2), DEPOSIT, "2021-02-05T19:28:43.111"),
-                new Transaction(13L, 1, 1, BigDecimal.valueOf(1), WITHDRAW, "2021-02-05T19:28:43.111"),
-                new Transaction(14L, 1, 2, BigDecimal.valueOf(1), DEPOSIT, "2021-02-05T19:28:43.111")));
+                new Transaction(
+                    12L, 1, 1, BigDecimal.valueOf(2), DEPOSIT, "2021-02-05T19:28:43.111"),
+                new Transaction(
+                    13L, 1, 1, BigDecimal.valueOf(1), WITHDRAW, "2021-02-05T19:28:43.111"),
+                new Transaction(
+                    14L, 1, 2, BigDecimal.valueOf(1), DEPOSIT, "2021-02-05T19:28:43.111")));
 
     when(cryptocurrencyService.getByIdList(asList(1, 2)))
         .thenReturn(
