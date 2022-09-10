@@ -82,7 +82,7 @@ public class TransactionService {
         userId,
         cryptoCurrencyId,
         amountInUsd.divide(quote, 10, RoundingMode.CEILING),
-        WITHDRAW,
+        DEPOSIT,
         LocalDateTime.now());
   }
 
@@ -94,7 +94,7 @@ public class TransactionService {
         userId,
         cryptocurrencyService.getByName(cryptocurrency).id(),
         amount.multiply(BigDecimal.valueOf(-1)),
-        SELL,
+        WITHDRAW,
         LocalDateTime.now());
   }
 }
