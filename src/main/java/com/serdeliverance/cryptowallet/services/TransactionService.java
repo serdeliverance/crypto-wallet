@@ -2,7 +2,6 @@
 package com.serdeliverance.cryptowallet.services;
 
 import static com.serdeliverance.cryptowallet.domain.OperationType.*;
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
 import com.serdeliverance.cryptowallet.domain.Cryptocurrency;
@@ -13,7 +12,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,31 +29,28 @@ public class TransactionService {
   public List<TransactionDTO> getHistory(Integer userId) {
     log.info("Getting transaction history for userId: {}", userId);
     userService.validateUser(userId);
-    List<Transaction> transactions = transactionRepository.getByUser(userId);
+    var transactions = transactionRepository.getByUser(userId);
     return transactions.isEmpty() ? List.of() : buildHistory(transactions);
   }
 
   private List<TransactionDTO> buildHistory(List<Transaction> transactions) {
-    Map<Integer, String> cryptoMap =
+    var cryptoMap =
         cryptocurrencyService
             .getByIdList(
-                transactions.stream()
-                    .map(Transaction::getCryptocurrencyId)
-                    .distinct()
-                    .collect(toList()))
+                transactions.stream().map(Transaction::cryptocurrencyId).distinct().toList())
             .stream()
-            .collect(toMap(Cryptocurrency::getId, Cryptocurrency::getName));
+            .collect(toMap(Cryptocurrency::id, Cryptocurrency::name));
 
     return transactions.stream()
         .map(
             tx ->
                 new TransactionDTO(
-                    tx.getId(),
-                    cryptoMap.get(tx.getCryptocurrencyId()),
-                    tx.getAmount(),
-                    tx.getOperationType().name(),
-                    tx.getTransactionDate()))
-        .collect(toList());
+                    tx.id(),
+                    cryptoMap.get(tx.cryptocurrencyId()),
+                    tx.amount(),
+                    tx.operationType().name(),
+                    tx.transactionDate()))
+        .toList();
   }
 
   public void transfer(Integer issuer, Integer receiver, String cryptocurrency, BigDecimal amount) {
@@ -64,7 +59,7 @@ public class TransactionService {
     userService.validateUser(issuer);
     userService.validateUser(receiver);
     portfolioService.validateFunds(issuer, cryptocurrency, amount);
-    Integer cryptoCurrencyId = cryptocurrencyService.getByName(cryptocurrency).getId();
+    Integer cryptoCurrencyId = cryptocurrencyService.getByName(cryptocurrency).id();
     transactionRepository.saveTransaction(
         issuer,
         cryptoCurrencyId,
@@ -79,8 +74,8 @@ public class TransactionService {
     log.info(
         "Buying {} for an amount of {} dollars by user: {}", cryptocurrency, amountInUsd, userId);
     userService.validateUser(userId);
-    Integer cryptoCurrencyId = cryptocurrencyService.getByName(cryptocurrency).getId();
-    BigDecimal quote = cryptocurrencyService.getQuote(cryptocurrency).getQuoteInUsd();
+    Integer cryptoCurrencyId = cryptocurrencyService.getByName(cryptocurrency).id();
+    BigDecimal quote = cryptocurrencyService.getQuote(cryptocurrency).quoteInUsd();
     transactionRepository.saveTransaction(
         userId,
         cryptoCurrencyId,
@@ -95,7 +90,7 @@ public class TransactionService {
     portfolioService.validateFunds(userId, cryptocurrency, amount);
     transactionRepository.saveTransaction(
         userId,
-        cryptocurrencyService.getByName(cryptocurrency).getId(),
+        cryptocurrencyService.getByName(cryptocurrency).id(),
         amount.multiply(BigDecimal.valueOf(-1)),
         SELL,
         LocalDateTime.now());

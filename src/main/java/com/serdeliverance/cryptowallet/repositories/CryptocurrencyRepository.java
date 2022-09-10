@@ -10,7 +10,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -26,7 +25,7 @@ public class CryptocurrencyRepository {
           new Cryptocurrency(rs.getInt("id"), rs.getString("name"), rs.getString("symbol"));
 
   public List<Cryptocurrency> getByIdList(List<Integer> ids) {
-    SqlParameterSource parameters = new MapSqlParameterSource("ids", ids);
+    var parameters = new MapSqlParameterSource("ids", ids);
     return namedParameterJdbcTemplate.query(
         "SELECT ID, NAME, SYMBOL FROM CRYPTOCURRENCY WHERE ID IN (:ids)", parameters, mapper);
   }

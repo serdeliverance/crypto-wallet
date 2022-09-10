@@ -14,7 +14,6 @@ import com.serdeliverance.cryptowallet.repositories.TransactionRepository;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +31,7 @@ public class PortfolioService {
   public PortfolioDTO getPortfolio(Integer userId) {
     log.info("Getting portfolio for userId: {}", userId);
     userService.validateUser(userId);
-    List<Transaction> transactions = transactionRepository.getByUser(userId);
+    var transactions = transactionRepository.getByUser(userId);
     return !transactions.isEmpty()
         ? buildPorfolio(userId, transactions)
         : emptyPortfolio(userId, LocalDateTime.now());
@@ -40,35 +39,28 @@ public class PortfolioService {
 
   private PortfolioDTO buildPorfolio(Integer userId, List<Transaction> transactions) {
     log.debug("Building crypto portfolio");
-    Map<String, BigDecimal> quotesInUSD =
+    var quotesInUSD =
         cryptocurrencyService.quotes().stream()
-            .collect(
-                Collectors.toMap(CurrencyQuoteDTO::getCrypto, CurrencyQuoteDTO::getQuoteInUsd));
-    Map<Integer, String> cryptoMap =
+            .collect(Collectors.toMap(CurrencyQuoteDTO::crypto, CurrencyQuoteDTO::quoteInUsd));
+    var cryptoMap =
         cryptocurrencyService
             .getByIdList(
-                transactions.stream()
-                    .map(Transaction::getCryptocurrencyId)
-                    .distinct()
-                    .collect(Collectors.toList()))
+                transactions.stream().map(Transaction::cryptocurrencyId).distinct().toList())
             .stream()
-            .collect(Collectors.toMap(Cryptocurrency::getId, Cryptocurrency::getName));
-    List<CurrencyTotalDTO> currencies =
-        transactions.stream()
-            .collect(groupingBy(Transaction::getCryptocurrencyId))
-            .entrySet()
-            .stream()
+            .collect(Collectors.toMap(Cryptocurrency::id, Cryptocurrency::name));
+    var currencies =
+        transactions.stream().collect(groupingBy(Transaction::cryptocurrencyId)).entrySet().stream()
             .map(
                 entry ->
                     new CurrencyTotalDTO(
                         cryptoMap.get(entry.getKey()),
                         entry.getValue().stream()
-                            .map(Transaction::getAmount)
+                            .map(Transaction::amount)
                             .reduce(BigDecimal.ZERO, BigDecimal::add)))
-            .collect(Collectors.toList());
-    BigDecimal totalInUSD =
+            .toList();
+    var totalInUSD =
         currencies.stream()
-            .map(crypto -> crypto.getAmount().multiply(quotesInUSD.get(crypto.getCurrency())))
+            .map(crypto -> crypto.amount().multiply(quotesInUSD.get(crypto.currency())))
             .reduce(BigDecimal.ZERO, BigDecimal::add);
     return new PortfolioDTO(userId, currencies, totalInUSD, LocalDateTime.now());
   }
@@ -80,13 +72,13 @@ public class PortfolioService {
         userId,
         cryptocurrency,
         amount);
-    BigDecimal currencyTotal =
+    var currencyTotal =
         transactionRepository.getByUser(userId).stream()
             .filter(
                 tx ->
-                    tx.getCryptocurrencyId()
-                        .equals(cryptocurrencyService.getByName(cryptocurrency).getId()))
-            .map(Transaction::getAmount)
+                    tx.cryptocurrencyId()
+                        .equals(cryptocurrencyService.getByName(cryptocurrency).id()))
+            .map(Transaction::amount)
             .reduce(BigDecimal.ZERO, BigDecimal::add);
     if (currencyTotal.compareTo(amount) < 0)
       throw new InvalidOperationException("Insufficient funds for transference/selling");

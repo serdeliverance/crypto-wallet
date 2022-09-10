@@ -87,7 +87,7 @@ public class TransactionServiceTest {
     // then
     assertThat(result).isNotNull();
     assertThat(result.size()).isEqualTo(1);
-    assertThat(result.get(0).getCryptocurrency()).isEqualTo("Bitcoin");
+    assertThat(result.get(0).cryptocurrency()).isEqualTo("Bitcoin");
   }
 
   @Test

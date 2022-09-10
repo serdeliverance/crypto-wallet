@@ -27,7 +27,7 @@ public class CoinmarketCapClient {
 
   public ListingQuotesResponseDTO quotes() {
     log.info("Getting quotes from coinmarketcap");
-    ResponseEntity<ListingQuotesResponseDTO> response =
+    var response =
         restTemplate.exchange(
             url, HttpMethod.GET, addApiKeyHeader(apiKey), ListingQuotesResponseDTO.class);
     return handleResponse(response);
@@ -43,7 +43,7 @@ public class CoinmarketCapClient {
   }
 
   private HttpEntity<String> addApiKeyHeader(String value) {
-    HttpHeaders headers = new HttpHeaders();
+    var headers = new HttpHeaders();
     headers.add(API_KEY_HEADER, value);
     return new HttpEntity<>(null, headers);
   }
