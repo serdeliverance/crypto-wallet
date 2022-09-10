@@ -33,7 +33,7 @@ public class UserService {
   }
 
   public void update(User user) {
-    Integer userId = user.getId().get(); // FIXME get() invocation
+    Integer userId = user.id().get(); // FIXME get() invocation
     if (this.exists(userId)) {
       userRepository.update(user);
     } else throw new ResourceNotFoundException("user: " + userId);

@@ -55,8 +55,8 @@ public class PortfolioServiceTest {
 
     // then
     assertThat(result).isNotNull();
-    assertThat(result.getTotalInUSD()).isEqualTo(BigDecimal.ZERO);
-    assertThat(result.getCurrencies()).isEqualTo(EMPTY_LIST);
+    assertThat(result.totalInUSD()).isEqualTo(BigDecimal.ZERO);
+    assertThat(result.currencies()).isEqualTo(EMPTY_LIST);
   }
 
   @Test
@@ -88,9 +88,9 @@ public class PortfolioServiceTest {
     CurrencyTotalDTO expectedCurrency = new CurrencyTotalDTO("Bitcoin", BigDecimal.valueOf(3));
 
     assertThat(result).isNotNull();
-    assertThat(result.getUserId()).isEqualTo(userId);
-    assertThat(result.getCurrencies().get(0)).isEqualTo(expectedCurrency);
-    assertThat(result.getTotalInUSD()).isEqualTo(expectedTotalInUsd);
+    assertThat(result.userId()).isEqualTo(userId);
+    assertThat(result.currencies().get(0)).isEqualTo(expectedCurrency);
+    assertThat(result.totalInUSD()).isEqualTo(expectedTotalInUsd);
   }
 
   @Test
@@ -128,18 +128,18 @@ public class PortfolioServiceTest {
     PortfolioDTO result = portfolioService.getPortfolio(userId);
 
     CurrencyTotalDTO resultBitcoinTotal =
-        result.getCurrencies().stream()
-            .filter(c -> c.getCurrency().equals("Bitcoin"))
+        result.currencies().stream()
+            .filter(c -> c.currency().equals("Bitcoin"))
             .findFirst()
             .get(); // FIXME get() invocation
     CurrencyTotalDTO resultEthereumTotal =
-        result.getCurrencies().stream()
-            .filter(c -> c.getCurrency().equals("Ethereum"))
+        result.currencies().stream()
+            .filter(c -> c.currency().equals("Ethereum"))
             .findFirst()
             .get(); // FIXME get() invocation
     CurrencyTotalDTO resultTetherTotal =
-        result.getCurrencies().stream()
-            .filter(c -> c.getCurrency().equals("Tether"))
+        result.currencies().stream()
+            .filter(c -> c.currency().equals("Tether"))
             .findFirst()
             .get(); // FIXME get() invocation
 
@@ -149,9 +149,9 @@ public class PortfolioServiceTest {
         new CurrencyTotalDTO("Ethereum", BigDecimal.valueOf(2));
     CurrencyTotalDTO expectedTetherTotal = new CurrencyTotalDTO("Tether", BigDecimal.valueOf(2));
 
-    BigDecimal expectedBitcoinInUsd = expectedBitcoinTotal.getAmount().multiply(bitcoinQuote);
-    BigDecimal expectedEthereumInUsd = expectedEthereumTotal.getAmount().multiply(ethereumQuote);
-    BigDecimal expectedTetherInUsd = expectedTetherTotal.getAmount().multiply(tetherQuote);
+    BigDecimal expectedBitcoinInUsd = expectedBitcoinTotal.amount().multiply(bitcoinQuote);
+    BigDecimal expectedEthereumInUsd = expectedEthereumTotal.amount().multiply(ethereumQuote);
+    BigDecimal expectedTetherInUsd = expectedTetherTotal.amount().multiply(tetherQuote);
 
     BigDecimal expectedTotalInUsd =
         expectedBitcoinInUsd.add(expectedEthereumInUsd).add(expectedTetherInUsd);
@@ -160,7 +160,7 @@ public class PortfolioServiceTest {
     assertThat(resultBitcoinTotal).isEqualTo(expectedBitcoinTotal);
     assertThat(resultEthereumTotal).isEqualTo(expectedEthereumTotal);
     assertThat(resultTetherTotal).isEqualTo(expectedTetherTotal);
-    assertThat(result.getTotalInUSD()).isEqualTo(expectedTotalInUsd);
+    assertThat(result.totalInUSD()).isEqualTo(expectedTotalInUsd);
   }
 
   @Test

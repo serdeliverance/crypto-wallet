@@ -41,30 +41,26 @@ public class PortfolioService {
     log.debug("Building crypto portfolio");
     var quotesInUSD =
         cryptocurrencyService.quotes().stream()
-            .collect(
-                Collectors.toMap(CurrencyQuoteDTO::getCrypto, CurrencyQuoteDTO::getQuoteInUsd));
+            .collect(Collectors.toMap(CurrencyQuoteDTO::crypto, CurrencyQuoteDTO::quoteInUsd));
     var cryptoMap =
         cryptocurrencyService
             .getByIdList(
-                transactions.stream().map(Transaction::getCryptocurrencyId).distinct().toList())
+                transactions.stream().map(Transaction::cryptocurrencyId).distinct().toList())
             .stream()
-            .collect(Collectors.toMap(Cryptocurrency::getId, Cryptocurrency::getName));
+            .collect(Collectors.toMap(Cryptocurrency::id, Cryptocurrency::name));
     var currencies =
-        transactions.stream()
-            .collect(groupingBy(Transaction::getCryptocurrencyId))
-            .entrySet()
-            .stream()
+        transactions.stream().collect(groupingBy(Transaction::cryptocurrencyId)).entrySet().stream()
             .map(
                 entry ->
                     new CurrencyTotalDTO(
                         cryptoMap.get(entry.getKey()),
                         entry.getValue().stream()
-                            .map(Transaction::getAmount)
+                            .map(Transaction::amount)
                             .reduce(BigDecimal.ZERO, BigDecimal::add)))
             .toList();
     var totalInUSD =
         currencies.stream()
-            .map(crypto -> crypto.getAmount().multiply(quotesInUSD.get(crypto.getCurrency())))
+            .map(crypto -> crypto.amount().multiply(quotesInUSD.get(crypto.currency())))
             .reduce(BigDecimal.ZERO, BigDecimal::add);
     return new PortfolioDTO(userId, currencies, totalInUSD, LocalDateTime.now());
   }
@@ -80,9 +76,9 @@ public class PortfolioService {
         transactionRepository.getByUser(userId).stream()
             .filter(
                 tx ->
-                    tx.getCryptocurrencyId()
-                        .equals(cryptocurrencyService.getByName(cryptocurrency).getId()))
-            .map(Transaction::getAmount)
+                    tx.cryptocurrencyId()
+                        .equals(cryptocurrencyService.getByName(cryptocurrency).id()))
+            .map(Transaction::amount)
             .reduce(BigDecimal.ZERO, BigDecimal::add);
     if (currencyTotal.compareTo(amount) < 0)
       throw new InvalidOperationException("Insufficient funds for transference/selling");

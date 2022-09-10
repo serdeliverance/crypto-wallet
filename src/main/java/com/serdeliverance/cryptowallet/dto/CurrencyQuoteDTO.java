@@ -2,14 +2,5 @@
 package com.serdeliverance.cryptowallet.dto;
 
 import java.math.BigDecimal;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class CurrencyQuoteDTO {
-  private String crypto;
-  private BigDecimal quoteInUsd;
-}
+public record CurrencyQuoteDTO(String crypto, BigDecimal quoteInUsd) {}

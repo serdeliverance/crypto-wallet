@@ -32,26 +32,26 @@ public class TransactionController {
   public void transfer(@RequestBody TransferenceDTO transferenceDTO) {
     log.info(
         "Performing transference from issuer {} to receiver {}",
-        transferenceDTO.getIssuer(),
-        transferenceDTO.getReceiver());
+        transferenceDTO.issuer(),
+        transferenceDTO.receiver());
     transactionService.transfer(
-        transferenceDTO.getIssuer(),
-        transferenceDTO.getReceiver(),
-        transferenceDTO.getCryptocurrency(),
-        transferenceDTO.getAmount());
+        transferenceDTO.issuer(),
+        transferenceDTO.receiver(),
+        transferenceDTO.cryptocurrency(),
+        transferenceDTO.amount());
   }
 
   @PostMapping("/buys")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void buy(@Valid @RequestBody BuyDTO buyDTO) {
-    log.info("Perfoming buy by user {}", buyDTO.getUserId());
-    transactionService.buy(buyDTO.getUserId(), buyDTO.getCryptocurrency(), buyDTO.getAmountInUsd());
+    log.info("Perfoming buy by user {}", buyDTO.userId());
+    transactionService.buy(buyDTO.userId(), buyDTO.cryptocurrency(), buyDTO.amounInUsd());
   }
 
   @PostMapping("/sells")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void buy(@Valid @RequestBody SellDTO sellDTO) {
-    log.info("Perfoming selling by user {}", sellDTO.getUserId());
-    transactionService.sell(sellDTO.getUserId(), sellDTO.getCryptocurrency(), sellDTO.getAmount());
+    log.info("Perfoming selling by user {}", sellDTO.userId());
+    transactionService.sell(sellDTO.userId(), sellDTO.cryptocurrency(), sellDTO.amount());
   }
 }

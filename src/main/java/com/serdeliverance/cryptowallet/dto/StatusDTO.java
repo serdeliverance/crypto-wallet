@@ -1,16 +1,9 @@
 /* (C)2022 */
 package com.serdeliverance.cryptowallet.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
-@Data
-@AllArgsConstructor
-public class StatusDTO {
+public record StatusDTO(String status) {
 
   private static final String OK_MSG = "ok";
-
-  private String status;
 
   public static StatusDTO ok() {
     return new StatusDTO(OK_MSG);
