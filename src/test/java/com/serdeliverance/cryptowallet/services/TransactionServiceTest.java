@@ -1,10 +1,8 @@
 /* (C)2022 */
 package com.serdeliverance.cryptowallet.services;
 
-import static com.serdeliverance.cryptowallet.domain.OperationType.BUY;
-import static com.serdeliverance.cryptowallet.domain.OperationType.SELL;
+import static com.serdeliverance.cryptowallet.domain.OperationType.*;
 import static java.util.Arrays.asList;
-import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -17,9 +15,10 @@ import com.serdeliverance.cryptowallet.exceptions.ResourceNotFoundException;
 import com.serdeliverance.cryptowallet.repositories.TransactionRepository;
 import java.math.BigDecimal;
 import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -34,14 +33,8 @@ public class TransactionServiceTest {
 
   @Mock private PortfolioService portfolioService;
 
+  @InjectMocks
   private TransactionService transactionService;
-
-  @BeforeEach
-  void setup() {
-    transactionService =
-        new TransactionService(
-            transactionRepository, cryptocurrencyService, userService, portfolioService);
-  }
 
   @Test
   public void whenUserNotExistsItShouldThrowResourceNotFoundException() {
@@ -69,38 +62,16 @@ public class TransactionServiceTest {
   }
 
   @Test
-  public void whenUserHasOneTransactionItShouldReturnTransactionHistory() {
-    // given
-    Integer userId = 1;
-
-    when(transactionRepository.getByUser(userId))
-        .thenReturn(
-            singletonList(
-                new Transaction(12L, 1, 1, BigDecimal.valueOf(2), BUY, "2021-02-05T19:28:43.111")));
-
-    when(cryptocurrencyService.getByIdList(singletonList(1)))
-        .thenReturn(List.of(new Cryptocurrency(1, "Bitcoin", "BTC")));
-
-    // when
-    List<TransactionDTO> result = transactionService.getHistory(userId);
-
-    // then
-    assertThat(result).isNotNull();
-    assertThat(result.size()).isEqualTo(1);
-    assertThat(result.get(0).cryptocurrency()).isEqualTo("Bitcoin");
-  }
-
-  @Test
-  public void whenUserTransactionsItShouldReturnTransactionHistory() {
+  public void whenUserHasTransactionsItShouldReturnTransactionHistory() {
     // given
     Integer userId = 1;
 
     when(transactionRepository.getByUser(userId))
         .thenReturn(
             asList(
-                new Transaction(12L, 1, 1, BigDecimal.valueOf(2), BUY, "2021-02-05T19:28:43.111"),
-                new Transaction(13L, 1, 1, BigDecimal.valueOf(1), SELL, "2021-02-05T19:28:43.111"),
-                new Transaction(14L, 1, 2, BigDecimal.valueOf(1), BUY, "2021-02-05T19:28:43.111")));
+                new Transaction(12L, 1, 1, BigDecimal.valueOf(2), DEPOSIT, "2021-02-05T19:28:43.111"),
+                new Transaction(13L, 1, 1, BigDecimal.valueOf(1), WITHDRAW, "2021-02-05T19:28:43.111"),
+                new Transaction(14L, 1, 2, BigDecimal.valueOf(1), DEPOSIT, "2021-02-05T19:28:43.111")));
 
     when(cryptocurrencyService.getByIdList(asList(1, 2)))
         .thenReturn(
@@ -128,7 +99,7 @@ public class TransactionServiceTest {
   }
 
   @Test
-  public void whenUserAmountIsInvalidItShouldThrowInvalidaOperationException() {
+  public void whenUserHasNoFundsItShouldThrowInvalidaOperationException() {
     // given
     doThrow(InvalidOperationException.class)
         .when(portfolioService)
