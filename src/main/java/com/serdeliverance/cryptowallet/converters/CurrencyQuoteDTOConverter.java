@@ -10,10 +10,8 @@ public class CurrencyQuoteDTOConverter {
   private static final String USD_CURRENCY = "USD";
 
   public static List<CurrencyQuoteDTO> convertFromResponse(ListingQuotesResponseDTO response) {
-    return response.getData().stream()
-        .map(
-            elem ->
-                new CurrencyQuoteDTO(elem.getName(), elem.getQuote().get(USD_CURRENCY).getPrice()))
+    return response.data().stream()
+        .map(elem -> new CurrencyQuoteDTO(elem.name(), elem.quote().get(USD_CURRENCY).price()))
         .toList();
   }
 }
