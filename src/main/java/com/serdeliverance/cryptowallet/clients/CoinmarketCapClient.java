@@ -23,13 +23,13 @@ public class CoinmarketCapClient {
   private String apiKey;
 
   @Value("${coinmarketcap.url}")
-  private String url;
+  private String baseUrl;
 
   public ListingQuotesResponseDTO quotes() {
     log.info("Getting quotes from coinmarketcap");
     var response =
         restTemplate.exchange(
-            url, HttpMethod.GET, addApiKeyHeader(apiKey), ListingQuotesResponseDTO.class);
+                baseUrl + "/v1/cryptocurrency/listings/latest", HttpMethod.GET, addApiKeyHeader(apiKey), ListingQuotesResponseDTO.class);
     return handleResponse(response);
   }
 

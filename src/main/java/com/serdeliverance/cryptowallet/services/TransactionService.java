@@ -15,6 +15,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -53,6 +54,7 @@ public class TransactionService {
         .toList();
   }
 
+  @Transactional
   public void transfer(Integer issuer, Integer receiver, String cryptocurrency, BigDecimal amount) {
     log.info(
         "Transferring {} {} from user: {} to user: {}", amount, cryptocurrency, issuer, receiver);
@@ -64,10 +66,10 @@ public class TransactionService {
         issuer,
         cryptoCurrencyId,
         amount.multiply(BigDecimal.valueOf(-1)),
-        TRANSFERENCE,
+        WITHDRAW,
         LocalDateTime.now());
     transactionRepository.saveTransaction(
-        receiver, cryptoCurrencyId, amount, BUY, LocalDateTime.now());
+        receiver, cryptoCurrencyId, amount, DEPOSIT, LocalDateTime.now());
   }
 
   public void buy(Integer userId, String cryptocurrency, BigDecimal amountInUsd) {
@@ -80,7 +82,7 @@ public class TransactionService {
         userId,
         cryptoCurrencyId,
         amountInUsd.divide(quote, 10, RoundingMode.CEILING),
-        BUY,
+        WITHDRAW,
         LocalDateTime.now());
   }
 
