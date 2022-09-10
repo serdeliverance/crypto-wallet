@@ -1,15 +1,4 @@
 /* (C)2022 */
 package com.serdeliverance.cryptowallet.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Cryptocurrency {
-  private Integer id;
-  private String name;
-  private String symbol;
-}
+public record Cryptocurrency(Integer id, String name, String symbol) {}

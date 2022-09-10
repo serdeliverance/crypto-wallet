@@ -37,19 +37,19 @@ public class TransactionService {
     var cryptoMap =
         cryptocurrencyService
             .getByIdList(
-                transactions.stream().map(Transaction::getCryptocurrencyId).distinct().toList())
+                transactions.stream().map(Transaction::cryptocurrencyId).distinct().toList())
             .stream()
-            .collect(toMap(Cryptocurrency::getId, Cryptocurrency::getName));
+            .collect(toMap(Cryptocurrency::id, Cryptocurrency::name));
 
     return transactions.stream()
         .map(
             tx ->
                 new TransactionDTO(
-                    tx.getId(),
-                    cryptoMap.get(tx.getCryptocurrencyId()),
-                    tx.getAmount(),
-                    tx.getOperationType().name(),
-                    tx.getTransactionDate()))
+                    tx.id(),
+                    cryptoMap.get(tx.cryptocurrencyId()),
+                    tx.amount(),
+                    tx.operationType().name(),
+                    tx.transactionDate()))
         .toList();
   }
 
@@ -59,7 +59,7 @@ public class TransactionService {
     userService.validateUser(issuer);
     userService.validateUser(receiver);
     portfolioService.validateFunds(issuer, cryptocurrency, amount);
-    Integer cryptoCurrencyId = cryptocurrencyService.getByName(cryptocurrency).getId();
+    Integer cryptoCurrencyId = cryptocurrencyService.getByName(cryptocurrency).id();
     transactionRepository.saveTransaction(
         issuer,
         cryptoCurrencyId,
@@ -74,7 +74,7 @@ public class TransactionService {
     log.info(
         "Buying {} for an amount of {} dollars by user: {}", cryptocurrency, amountInUsd, userId);
     userService.validateUser(userId);
-    Integer cryptoCurrencyId = cryptocurrencyService.getByName(cryptocurrency).getId();
+    Integer cryptoCurrencyId = cryptocurrencyService.getByName(cryptocurrency).id();
     BigDecimal quote = cryptocurrencyService.getQuote(cryptocurrency).quoteInUsd();
     transactionRepository.saveTransaction(
         userId,
@@ -90,7 +90,7 @@ public class TransactionService {
     portfolioService.validateFunds(userId, cryptocurrency, amount);
     transactionRepository.saveTransaction(
         userId,
-        cryptocurrencyService.getByName(cryptocurrency).getId(),
+        cryptocurrencyService.getByName(cryptocurrency).id(),
         amount.multiply(BigDecimal.valueOf(-1)),
         SELL,
         LocalDateTime.now());

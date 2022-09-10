@@ -11,7 +11,7 @@ import java.util.Optional;
 public class UserDTOConverter {
 
   public static UserDTO convertToDTO(User user) {
-    return new UserDTO(user.getId(), user.getUsername(), user.getEmail());
+    return new UserDTO(user.id(), user.username(), user.email());
   }
 
   public static User convertToModel(CreateUserDTO createUserDTO) {

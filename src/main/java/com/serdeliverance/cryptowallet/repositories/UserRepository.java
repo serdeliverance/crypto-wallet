@@ -43,18 +43,18 @@ public class UserRepository {
   public void save(User user) {
     jdbcTemplate.update(
         "INSERT INTO USERS(USERNAME, PASSWORD, EMAIL) VALUES(?, ?, ?)",
-        user.getUsername(),
-        user.getPassword(),
-        user.getEmail());
+        user.username(),
+        user.password(),
+        user.email());
   }
 
   public void update(User user) {
     jdbcTemplate.update(
         "UPDATE USERS SET USERNAME = ?, PASSWORD = ?, EMAIL = ? WHERE ID = ?",
-        user.getUsername(),
-        user.getPassword(),
-        user.getEmail(),
-        user.getId().get()); // FIXME get() invocation
+        user.username(),
+        user.password(),
+        user.email(),
+        user.id().get()); // FIXME get() invocation
   }
 
   public void delete(Integer userId) {

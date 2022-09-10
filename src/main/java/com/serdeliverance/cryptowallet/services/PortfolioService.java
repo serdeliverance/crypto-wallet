@@ -45,20 +45,17 @@ public class PortfolioService {
     var cryptoMap =
         cryptocurrencyService
             .getByIdList(
-                transactions.stream().map(Transaction::getCryptocurrencyId).distinct().toList())
+                transactions.stream().map(Transaction::cryptocurrencyId).distinct().toList())
             .stream()
-            .collect(Collectors.toMap(Cryptocurrency::getId, Cryptocurrency::getName));
+            .collect(Collectors.toMap(Cryptocurrency::id, Cryptocurrency::name));
     var currencies =
-        transactions.stream()
-            .collect(groupingBy(Transaction::getCryptocurrencyId))
-            .entrySet()
-            .stream()
+        transactions.stream().collect(groupingBy(Transaction::cryptocurrencyId)).entrySet().stream()
             .map(
                 entry ->
                     new CurrencyTotalDTO(
                         cryptoMap.get(entry.getKey()),
                         entry.getValue().stream()
-                            .map(Transaction::getAmount)
+                            .map(Transaction::amount)
                             .reduce(BigDecimal.ZERO, BigDecimal::add)))
             .toList();
     var totalInUSD =
@@ -79,9 +76,9 @@ public class PortfolioService {
         transactionRepository.getByUser(userId).stream()
             .filter(
                 tx ->
-                    tx.getCryptocurrencyId()
-                        .equals(cryptocurrencyService.getByName(cryptocurrency).getId()))
-            .map(Transaction::getAmount)
+                    tx.cryptocurrencyId()
+                        .equals(cryptocurrencyService.getByName(cryptocurrency).id()))
+            .map(Transaction::amount)
             .reduce(BigDecimal.ZERO, BigDecimal::add);
     if (currencyTotal.compareTo(amount) < 0)
       throw new InvalidOperationException("Insufficient funds for transference/selling");
