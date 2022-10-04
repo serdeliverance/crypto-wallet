@@ -11,23 +11,22 @@ It provides the following functionalities:
 
 ## Tech Stack
 
-* Java 11
+* Java 17
 * Spring Boot
 * Postgres
-* Kafka
 * Docker
 
 ## Architecture
 
 The following diagram shows the systems architecture:
 
-![Alt text](diagrams/cw-architecture.png?raw=true "Architecture") 
+![Alt text](diagrams/cw-architecture.png?raw=true "Architecture")
 
 ## Data Model
 
 The following diagram shows the data model:
 
-![Alt text](diagrams/cw-data-model.png?raw=true "Title") 
+![Alt text](diagrams/cw-data-model.png?raw=true "Title")
 
 ## Run the app
 
@@ -39,11 +38,26 @@ docker-compose up
 
 2. Run the application
 
+You'll need to have configured the following env variables before running the app:
+
+* `DB_URL`
+* `DB_USER`
+* `DB_PASSWORD`
+* `COINMARKETCAP_URL`: [Coinmaerkap](https://coinmarketcap.com/api/) api url
+* `COINMARKETCAP_API_KEY`: you have to generate one API KEY on [Coinmaketcap Web Site](https://coinmarketcap.com/api/)
+
+Then execute:
+
 ```
-mvn spring-boot:run
+./gradlew bootRun
 ```
 
 It runs the application on http://localhost:8080
+
+
+## Database migrations
+
+We use [Flyway](https://flywaydb.org/) for database migrations. It runs the migration on application startup, so remember to have the dockers up when running the app.
 
 ## API
 
@@ -69,16 +83,16 @@ curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET
 
 ```
 curl -X POST -H "Content-Type: application/json" \
-    -d '{"username": "pepe", "password": "pass1234", "email": "pepe@gmail.com"}' \
-    http://localhost:8080/users
+	-d '{"username": "pepe", "password": "pass1234", "email": "pepe@gmail.com"}' \
+	http://localhost:8080/users
 ```
 
 * Update user
 
 ```
 curl -X PUT -H "Content-Type: application/json" \
-    -d '{"username": "pepe", "password": "pass1234", "email": "pepe@gmail.com"}' \
-    http://localhost:8080/users/:userId
+	-d '{"username": "pepe", "password": "pass1234", "email": "pepe@gmail.com"}' \
+	http://localhost:8080/users/:userId
 ```
 
 * Delete user
@@ -109,25 +123,43 @@ curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET
 
 ```
 curl -X POST -H "Content-Type: application/json" \
-    -d '{"issuer": "88", "receiver": "2", "cryptocurrency": "Huobi Token", "amount": 10}' \
-    http://localhost:8080/transactions/transferences
+	-d '{"issuer": "88", "receiver": "2", "cryptocurrency": "Huobi Token", "amount": 10}' \
+	http://localhost:8080/transactions/transferences
 ```
 
 * Buy
 
 ```
 curl -X POST -H "Content-Type: application/json" \
-    -d '{"userId": 3, "cryptocurrency": "Bitcoin", "amountInUsd": 100000}' \
-    http://localhost:8080/transactions/buys
+	-d '{"userId": 3, "cryptocurrency": "Bitcoin", "amountInUsd": 100000}' \
+	http://localhost:8080/transactions/buys
 ```
 
 * Sell
 
 ```
 curl -X POST -H "Content-Type: application/json" \
-    -d '{"userId": 3, "cryptocurrency": "Bitcoin", "amount": 1}' \
-    http://localhost:8080/transactions/sells
+	-d '{"userId": 3, "cryptocurrency": "Bitcoin", "amount": 1}' \
+	http://localhost:8080/transactions/sells
 ```
+
+## Formatting & Coding Style
+
+This project uses [Spotless](https://github.com/diffplug/spotless) to enforce a consistent programming style. Under the hood, it is configured to use [Google Java Format](https://github.com/google/google-java-format). We have the following commands:
+
+* check formatting violations:
+
+```
+./gradlew spotlessCheck
+```
+
+* apply formatting:
+
+```
+./gradlew spotlessApply
+```
+
+By default, this plugin is attached to the `verify phase` of maven lifecycle.
 
 ## Extra notes
 

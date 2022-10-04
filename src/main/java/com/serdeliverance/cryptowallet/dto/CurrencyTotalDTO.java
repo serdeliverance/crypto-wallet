@@ -1,15 +1,6 @@
+/* (C)2022 */
 package com.serdeliverance.cryptowallet.dto;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class CurrencyTotalDTO {
-    private String currency;
-    private BigDecimal amount;
-}
+public record CurrencyTotalDTO(String currency, BigDecimal amount) {}
