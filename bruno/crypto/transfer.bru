@@ -1,0 +1,20 @@
+meta {
+  name: transfer
+  type: http
+  seq: 10
+}
+
+post {
+  url: {{url}}/transactions/transferences
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "issuer": 88,
+      "receiver": 2,
+      "cryptocurrency": "Huobi Token",
+      "amount": 6000
+  }
+}

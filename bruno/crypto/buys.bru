@@ -1,0 +1,19 @@
+meta {
+  name: buys
+  type: http
+  seq: 11
+}
+
+post {
+  url: {{url}}/transactions/buys
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "userId": 3,
+      "cryptocurrency": "Bitcoin",
+      "amountInUsd": 100000
+  }
+}

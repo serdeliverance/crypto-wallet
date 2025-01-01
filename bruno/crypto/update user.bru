@@ -1,0 +1,19 @@
+meta {
+  name: update user
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{url}}/users/2
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "username":"pepito",
+      "password":"soypepito",
+      "email":"pepito@pepito"
+  }
+}
