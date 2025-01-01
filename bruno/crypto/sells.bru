@@ -1,0 +1,19 @@
+meta {
+  name: sells
+  type: http
+  seq: 12
+}
+
+post {
+  url: http://localhost:8080/transactions/sells
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "userId": 3,
+      "cryptocurrency": "Bitcoin",
+      "amount": 1
+  }
+}
